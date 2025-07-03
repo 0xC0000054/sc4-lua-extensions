@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\GZCOM">
+      <UniqueIdentifier>{634b96ad-93c3-4d7e-81f2-492a2d0f96d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GZCOM">
+      <UniqueIdentifier>{55969e5e-2491-4049-8687-619fc7c065a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lua-extensions">
+      <UniqueIdentifier>{4d2cfbc7-5caa-433b-b4a6-f88980408816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lua-extensions">
+      <UniqueIdentifier>{57b13e83-b813-4f48-918f-248895be72d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lua-extensions\sc4game">
+      <UniqueIdentifier>{ada41345-2a3c-4b99-a1e4-f2fc9cd7ebb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lua-extensions\sc4game">
+      <UniqueIdentifier>{da23655f-0a49-4afd-9955-9ef2cc570ed5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseVariant.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCOMDllDirector.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2Standard.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cS3DVector3.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSCBaseProperty.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\LuaGlobalFunctions.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCLuaUtil.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaExtensionsDllDirector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\LuaExtensionFunctionTests.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\LuaIGZVariantHelper.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\GameTableExtensions.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\LuaFunctionRegistration.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\SC4GameBudgetTableExtensions.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\SC4GameLanguageTable.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\SC4GameTableBase.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\SC4GameCityTable.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
+    <ClCompile Include="SC4VersionDetection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\SC4GameCameraTable.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZCheatCodeManager.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4City.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4Simulator.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4App.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\LuaGlobalFunctions.h">
+      <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\LuaExtensionFunctionTests.h">
+      <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalPointers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZCommandParameterSet.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZCommandServer.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\LuaIGZVariantHelper.h">
+      <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISCLua.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\GameTableExtensions.h">
+      <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCLuaUtil.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\LuaFunctionRegistration.h">
+      <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\SC4GameBudgetTableExtensions.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\SC4GameCityTable.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\SC4GameLanguageTable.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\SC4GameTableBase.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="SC4VersionDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\SC4GameCameraTable.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="version.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
