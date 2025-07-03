@@ -11,7 +11,7 @@ See [null45_lua_extensions.lua](https://github.com/0xC0000054/sc4-lua-extensions
 and [null45_lua_extensions_tests.lua](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/dat/null45_lua_extensions_tests.lua) for examples of their use.
 
 It also re-enables the Lua error logging that Maxis disabled in the retail version of the game.
-Note that due to the way that the gale loads plugin Lua scripts, the error messages only give
+Note that due to the way that the game loads plugin Lua scripts, the error messages only give
 the line number within the script unless the error occurs within a function.
 
 ## Download
