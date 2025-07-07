@@ -231,7 +231,7 @@ bool SC4GameCityTable::sPlaceLot(
 			{
 				uint32_t buildingExemplarID = 0;
 
-				// The buildingExemplarID parameter is optional, but callers can use it they want
+				// The buildingExemplarID parameter is optional, but callers can use it if they want
 				// a specific variant for a lot that is used by multiple building families.
 				// When the value is 0, lots with multiple building families will use a randomly
 				// picked building.
