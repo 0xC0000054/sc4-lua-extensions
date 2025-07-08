@@ -111,6 +111,12 @@
     <ClCompile Include="lua-extensions\sc4game\SC4GameCameraTable.cpp">
       <Filter>Source Files\lua-extensions\sc4game</Filter>
     </ClCompile>
+    <ClCompile Include="PackageScriptLoadingPatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Patcher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -187,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="lua-extensions\sc4game\SC4GameCameraTable.h">
       <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="PackageScriptLoadingPatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Patcher.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

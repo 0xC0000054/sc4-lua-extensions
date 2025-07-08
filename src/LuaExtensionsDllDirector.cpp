@@ -39,6 +39,7 @@
 #include "cRZBaseString.h"
 #include "GlobalPointers.h"
 #include "GZServPtrs.h"
+#include "PackageScriptLoadingPatch.h"
 
 #include "GameTableExtensions.h"
 #include "LuaGlobalFunctions.h"
@@ -328,6 +329,8 @@ public:
 
 	bool OnStart(cIGZCOM * pCOM)
 	{
+		PackageScriptLoadingPatch::Install();
+
 		const cIGZFrameWork::FrameworkState state = mpFrameWork->GetState();
 
 		if (state < cIGZFrameWork::kStatePreAppInit)
