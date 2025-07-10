@@ -24,6 +24,7 @@
 
 namespace SC4VersionDetection
 {
+	uint16_t GetGameVersion();
 	bool IsVersion641();
 };
 

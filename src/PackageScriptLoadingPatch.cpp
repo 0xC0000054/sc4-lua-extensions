@@ -22,6 +22,7 @@
 #include "PackageScriptLoadingPatch.h"
 #include "cGZPersistResourceKey.h"
 #include "cISCLua.h"
+#include "Logger.h"
 #include "Patcher.h"
 #include "SC4VersionDetection.h"
 #include <cstdio>
@@ -57,10 +58,32 @@ namespace
 
 void PackageScriptLoadingPatch::Install()
 {
-	if (SC4VersionDetection::IsVersion641())
+	Logger& logger = Logger::GetInstance();
+
+	const uint16_t gameVersion = SC4VersionDetection::GetGameVersion();
+
+	if (gameVersion == 641)
 	{
 		constexpr uintptr_t SCLuaHelp_LoadPackageScripts_Inject = 0x5FBD64;
 
-		Patcher::InstallCallHook(SCLuaHelp_LoadPackageScripts_Inject, reinterpret_cast<uintptr_t>(&Hooked_SCLuaHelp_LoadResourceScript));
+		try
+		{
+			Patcher::InstallCallHook(SCLuaHelp_LoadPackageScripts_Inject, reinterpret_cast<uintptr_t>(&Hooked_SCLuaHelp_LoadResourceScript));
+			logger.WriteLine(LogLevel::Info, "Installed the Lua package script name patch.");
+		}
+		catch (const std::exception& e)
+		{
+			logger.WriteLineFormatted(
+				LogLevel::Error,
+				"Failed to install the Lua package script name patch: %s",
+				e.what());
+		}
+	}
+	else
+	{
+		logger.WriteLineFormatted(
+			LogLevel::Error,
+			"Failed to install the Lua package script name patch, unsupported game version: %d",
+			gameVersion);
 	}
 }

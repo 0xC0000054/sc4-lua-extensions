@@ -128,9 +128,16 @@ namespace
 	}
 }
 
+uint16_t SC4VersionDetection::GetGameVersion()
+{
+	static uint16_t gameVersion = DetermineGameVersion();
+
+	return gameVersion;
+}
+
 bool SC4VersionDetection::IsVersion641()
 {
-	static bool isVersion641 = DetermineGameVersion() == 641;
+	static bool isVersion641 = GetGameVersion() == 641;
 
 	return isVersion641;
 }
