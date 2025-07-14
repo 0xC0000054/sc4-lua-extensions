@@ -37,6 +37,8 @@ public:
 
 	static Logger& GetInstance();
 
+	void Flush();
+
 	void Init(std::filesystem::path logFilePath, LogLevel logLevel);
 
 	bool IsEnabled(LogLevel option) const;

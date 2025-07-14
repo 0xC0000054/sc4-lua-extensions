@@ -63,6 +63,11 @@ namespace
 
 		logger.Write(LogLevel::Info, "\n");
 
+		// Users may expect the Lua print data to be updated in real time.
+		// Without the flush call, the data will only be written to the
+		// file when the buffer is full or the application closes.
+		logger.Flush();
+
 		return 0;
 	}
 }

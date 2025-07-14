@@ -45,6 +45,14 @@ Logger& Logger::GetInstance()
 	return logger;
 }
 
+void Logger::Flush()
+{
+	if (initialized && logFile)
+	{
+		logFile.flush();
+	}
+}
+
 Logger::Logger() : initialized(false), logFile(), logLevel(LogLevel::Error)
 {
 }
