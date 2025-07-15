@@ -39,10 +39,10 @@
 #include "cRZBaseString.h"
 #include "GlobalPointers.h"
 #include "GZServPtrs.h"
+#include "LuaPrintFunction.h"
 #include "PackageScriptLoadingPatch.h"
 
 #include "GameTableExtensions.h"
-#include "LuaGlobalFunctions.h"
 #include "SC4GameBudgetTableExtensions.h"
 #include "SC4GameCameraTable.h"
 #include "SC4GameCityTable.h"
@@ -58,6 +58,9 @@
 
 static constexpr uint32_t kSC4MessagePostCityInit = 0x26D31EC1;
 static constexpr uint32_t kSC4MessagePreCityShutdown = 0x26D31EC2;
+static constexpr uint32_t kSC4MessagePostRegionInit = 0xCBB5BB45;
+static constexpr uint32_t kSC4MessagePreRegionShutdown = 0x8BB5BB46;
+static constexpr uint32_t kMessageCheatIssued = 0x230E27AC;
 
 // Only used to run the Lua testing code in debug builds.
 static constexpr uint32_t kSC4MessagePostCityInitComplete = 0xEA8AE29A;
@@ -69,6 +72,12 @@ static constexpr std::array<uint32_t, 2> RequiredNotifications =
 };
 
 static constexpr uint32_t kLuaExtensionsDirectorID = 0x68AC07EE;
+
+static constexpr uint32_t kShowMaxisLuaDebugTextCheatID = 0x519E8A25;
+static constexpr std::string_view kShowMaxisLuaDebugTextCheatStr = "ShowMaxisLuaDebugText";
+
+static constexpr uint32_t kHideMaxisLuaDebugTextCheatID = 0x519E8A26;
+static constexpr std::string_view kHideMaxisLuaDebugTextCheatStr = "HideMaxisLuaDebugText";
 
 cIGZCheatCodeManager* spCCM = nullptr;
 cRZAutoRefCount<cIGZCommandServer> spCommandServer;
@@ -181,7 +190,7 @@ namespace
 class LuaExtensionsDllDirector : public cRZMessage2COMDirector
 {
 public:
-	LuaExtensionsDllDirector()
+	LuaExtensionsDllDirector() : replacedMaxisPrintFunctionPointers(false)
 	{
 		std::filesystem::path logFilePath = FileSystem::GetPluginLogFilePath();
 
@@ -207,7 +216,11 @@ public:
 
 			cISCLua* pLua = spCity->GetAdvisorSystem()->GetScriptingContext();
 
-			LuaGlobalFunctions::Register(pLua);
+			if (!replacedMaxisPrintFunctionPointers)
+			{
+				LuaPrintFunction::RegisterFallbackPrintFunction(pLua);
+			}
+
 			GameTableExtensions::Register(pLua);
 
 			// The GameDataRegistry class that is used to register the sc4game methods appears
@@ -245,6 +258,45 @@ public:
 		spView3D.Reset();
 	}
 
+	void PostRegionInit()
+	{
+		if (spCCM)
+		{
+			spCCM->AddNotification2(this, 0);
+			spCCM->RegisterCheatCode(
+				kShowMaxisLuaDebugTextCheatID,
+				cRZBaseString(kShowMaxisLuaDebugTextCheatStr.data(), kShowMaxisLuaDebugTextCheatStr.size()));
+			spCCM->RegisterCheatCode(
+				kHideMaxisLuaDebugTextCheatID,
+				cRZBaseString(kHideMaxisLuaDebugTextCheatStr.data(), kHideMaxisLuaDebugTextCheatStr.size()));
+		}
+	}
+
+	void PreRegionShutdown()
+	{
+		if (spCCM)
+		{
+			spCCM->RemoveNotification2(this, 0);
+			spCCM->UnregisterCheatCode(kShowMaxisLuaDebugTextCheatID);
+			spCCM->UnregisterCheatCode(kHideMaxisLuaDebugTextCheatID);
+		}
+	}
+
+	void ProcessCheat(cIGZMessage2Standard* pStandardMsg)
+	{
+		const uint32_t cheatID = static_cast<uint32_t>(pStandardMsg->GetData1());
+
+		switch (cheatID)
+		{
+		case kShowMaxisLuaDebugTextCheatID:
+			LuaPrintFunction::SetPrintMaxisScriptDebugOutput(true);
+			break;
+		case kHideMaxisLuaDebugTextCheatID:
+			LuaPrintFunction::SetPrintMaxisScriptDebugOutput(false);
+			break;
+		}
+	}
+
 	bool DoMessage(cIGZMessage2* pMessage)
 	{
 		switch (pMessage->GetType())
@@ -260,6 +312,15 @@ public:
 		case kSC4MessagePreCityShutdown:
 			PreCityShutdown();
 			break;
+		case kSC4MessagePostRegionInit:
+			PostRegionInit();
+			break;
+		case kSC4MessagePreRegionShutdown:
+			PreRegionShutdown();
+			break;
+		case kMessageCheatIssued:
+			ProcessCheat(static_cast<cIGZMessage2Standard*>(pMessage));
+			break;
 		}
 
 		return true;
@@ -274,6 +335,15 @@ public:
 			for (const uint32_t& messageID : RequiredNotifications)
 			{
 				pMS2->AddNotification(this, messageID);
+			}
+
+			if (replacedMaxisPrintFunctionPointers)
+			{
+				// Subscribe to notifications for the region-view cheat codes
+				// that control weather the Maxis debug text is included in
+				// the log's Lua print output.
+				pMS2->AddNotification(this, kSC4MessagePostRegionInit);
+				pMS2->AddNotification(this, kSC4MessagePreRegionShutdown);
 			}
 
 #ifdef _DEBUG
@@ -329,6 +399,7 @@ public:
 
 	bool OnStart(cIGZCOM * pCOM)
 	{
+		replacedMaxisPrintFunctionPointers = LuaPrintFunction::PatchMaxisPrintFunctionPointers();
 		PackageScriptLoadingPatch::Install();
 
 		const cIGZFrameWork::FrameworkState state = mpFrameWork->GetState();
@@ -347,6 +418,7 @@ public:
 	SC4GameCameraTable sc4gameCameraTable;
 	SC4GameCityTable sc4gameCityTable;
 	SC4GameLanguageTable sc4gameLanguageTable;
+	bool replacedMaxisPrintFunctionPointers;
 };
 
 cRZCOMDllDirector* RZGetCOMDllDirector() {

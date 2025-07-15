@@ -22,7 +22,11 @@
 #pragma once
 #include "cISCLua.h"
 
-namespace LuaGlobalFunctions
+namespace LuaPrintFunction
 {
-	void Register(cISCLua* pLua);
+	bool PatchMaxisPrintFunctionPointers();
+
+	void RegisterFallbackPrintFunction(cISCLua* pLua);
+
+	void SetPrintMaxisScriptDebugOutput(bool enabled);
 }

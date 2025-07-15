@@ -1,4 +1,5 @@
 automata
+dofile
 eax
 esi
 Euro
@@ -7,6 +8,7 @@ growified
 Lua
 Plugin
 plugins
+registerd
 retracment
 sublicense
 sv

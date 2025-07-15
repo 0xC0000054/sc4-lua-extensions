@@ -14,6 +14,13 @@ It also re-enables the Lua error logging that Maxis disabled in the retail versi
 Note that due to the way that the game loads plugin Lua scripts, the error messages only give
 the line number within the script unless the error occurs within a function.
 
+## Maxis Lua Debug Text
+
+The plugin adds two region-view cheat codes that control weather the Maxis Lua debug text is
+included in the log, _ShowMaxisLuaDebugText_ and _HideMaxisLuaDebugText_.
+
+By default, the Maxis Lua debug text will be excluded from the log.
+
 ## Download
 
 The plugin can be downloaded from the Releases tab: https://github.com/0xC0000054/sc4-lua-extensions/releases

@@ -69,9 +69,6 @@
     <ClCompile Include="DebugUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lua-extensions\LuaGlobalFunctions.cpp">
-      <Filter>Source Files\lua-extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCLuaUtil.cpp">
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
     <ClCompile Include="Patcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LuaPrintFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -142,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="DebugUtil.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lua-extensions\LuaGlobalFunctions.h">
-      <Filter>Header Files\lua-extensions</Filter>
     </ClInclude>
     <ClInclude Include="lua-extensions\LuaExtensionFunctionTests.h">
       <Filter>Header Files\lua-extensions</Filter>
@@ -198,6 +195,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Patcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaPrintFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

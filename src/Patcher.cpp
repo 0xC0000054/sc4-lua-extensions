@@ -42,3 +42,17 @@ void Patcher::InstallCallHook(uintptr_t address, uintptr_t pfnFunc)
 	*((uint8_t*)address) = 0xE8;
 	*((uintptr_t*)(address + 1)) = pfnFunc - address - 5;
 }
+
+bool Patcher::OverwriteMemoryUintptr(uintptr_t address, uintptr_t newValue)
+{
+	bool result = false;
+
+	DWORD oldProtect;
+	if (VirtualProtect(reinterpret_cast<void*>(address), sizeof(uintptr_t), PAGE_EXECUTE_READWRITE, &oldProtect))
+	{
+		*((uintptr_t*)address) = newValue;
+		result = true;
+	}
+
+	return result;
+}
