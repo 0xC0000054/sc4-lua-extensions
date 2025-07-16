@@ -36,7 +36,7 @@ namespace
 
 	static const pfn_SCLuaHelp_LoadResourceScript Real_SCLuaHelp_LoadResourceScript = reinterpret_cast<pfn_SCLuaHelp_LoadResourceScript>(0x5FB7B0);
 
-		int32_t __cdecl Hooked_SCLuaHelp_LoadResourceScript(cISCLua* pLua, cGZPersistResourceKey const& resKey, char* name)
+	int32_t __cdecl Hooked_SCLuaHelp_LoadResourceScript(cISCLua* pLua, cGZPersistResourceKey const& resKey, char* name)
 	{
 		char resourceName[1024]{};
 
