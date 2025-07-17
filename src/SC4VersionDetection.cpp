@@ -49,29 +49,36 @@ namespace
 {
 	uint64_t GetAssemblyVersion(HMODULE hModule)
 	{
-		wil::unique_cotaskmem_string szVersionFile = wil::GetModuleFileNameW(hModule);
+		wil::unique_cotaskmem_string szVersionFile;
 
-		// http://stackoverflow.com/a/940743
-		DWORD verHandle = 0;
-		UINT  size = 0;
-		DWORD verSize = GetFileVersionInfoSizeW(szVersionFile.get(), &verHandle);
-
-		if (verSize > 0)
+		if (SUCCEEDED((wil::GetModuleFileNameW<wil::unique_cotaskmem_string, 128>(hModule, szVersionFile))))
 		{
-			auto verData = wil::make_unique_cotaskmem<BYTE[]>(verSize);
-			LPBYTE lpBuffer = nullptr;
+			// http://stackoverflow.com/a/940743
+			DWORD verHandle = 0;
+			UINT  size = 0;
+			DWORD verSize = GetFileVersionInfoSizeW(szVersionFile.get(), &verHandle);
 
-			if (GetFileVersionInfoW(szVersionFile.get(), 0, verSize, verData.get())
-				&& VerQueryValueW(verData.get(), L"\\", reinterpret_cast<LPVOID*>(&lpBuffer), &size)
-				&& size > 0)
+			if (verSize > 0)
 			{
-				VS_FIXEDFILEINFO* verInfo = reinterpret_cast<VS_FIXEDFILEINFO*>(lpBuffer);
-				if (verInfo->dwSignature == 0xfeef04bd)
-				{
-					uint64_t qwValue = static_cast<uint64_t>(verInfo->dwFileVersionMS) << 32;
-					qwValue |= verInfo->dwFileVersionLS;
+				auto verData = wil::make_unique_cotaskmem_nothrow<BYTE[]>(verSize);
 
-					return qwValue;
+				if (verData)
+				{
+					LPBYTE lpBuffer = nullptr;
+
+					if (GetFileVersionInfoW(szVersionFile.get(), 0, verSize, verData.get())
+						&& VerQueryValueW(verData.get(), L"\\", reinterpret_cast<LPVOID*>(&lpBuffer), &size)
+						&& size > 0)
+					{
+						VS_FIXEDFILEINFO* verInfo = reinterpret_cast<VS_FIXEDFILEINFO*>(lpBuffer);
+						if (verInfo->dwSignature == 0xfeef04bd)
+						{
+							uint64_t qwValue = static_cast<uint64_t>(verInfo->dwFileVersionMS) << 32;
+							qwValue |= verInfo->dwFileVersionLS;
+
+							return qwValue;
+						}
+					}
 				}
 			}
 		}
