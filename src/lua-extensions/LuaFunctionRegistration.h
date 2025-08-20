@@ -21,17 +21,16 @@
 
 #pragma once
 #include "cISCLua.h"
-#include <string_view>
 
 namespace LuaFunctionRegistration
 {
 	struct LuaFunctionInfo
 	{
-		std::string_view name;
+		const char* name;
 		lua_CFunction pFunction;
 
 		constexpr LuaFunctionInfo(
-			const std::string_view& name,
+			const char* name,
 			lua_CFunction function)
 			: name(name), pFunction(function)
 		{
@@ -39,7 +38,7 @@ namespace LuaFunctionRegistration
 
 		bool IsValid() const
 		{
-			return !name.empty() && pFunction;
+			return name != nullptr && *name != '\0' && pFunction;
 		}
 	};
 

@@ -59,7 +59,7 @@ void LuaFunctionRegistration::RegisterFunction(
 				// (e.g. game.trend_slope).
 
 				pLua->Register(info.pFunction, kTempFunctionName);
-				pLua->PushLString(info.name.data(), info.name.size());
+				pLua->PushString(info.name);
 				pLua->GetGlobal(kTempFunctionName);
 				pLua->SetTable(-3);
 				pLua->Pop(1);
@@ -70,14 +70,14 @@ void LuaFunctionRegistration::RegisterFunction(
 						LogLevel::Info,
 						"Registered the %s.%s function",
 						tableName,
-						std::string(info.name).c_str());
+						info.name);
 				}
 				else
 				{
 					logger.WriteLineFormatted(
 						LogLevel::Info,
 						"Registered the %s function",
-						std::string(info.name).c_str());
+						info.name);
 				}
 			}
 			else
@@ -88,7 +88,7 @@ void LuaFunctionRegistration::RegisterFunction(
 						LogLevel::Info,
 						"Failed to register the %s.%s function. The %s object is not a Lua table.",
 						tableName,
-						std::string(info.name).c_str(),
+						info.name,
 						tableName);
 				}
 				else
@@ -96,7 +96,7 @@ void LuaFunctionRegistration::RegisterFunction(
 					logger.WriteLineFormatted(
 						LogLevel::Info,
 						"Failed to register the %s function.",
-						std::string(info.name).c_str());
+						info.name);
 				}
 			}
 		}
@@ -109,14 +109,14 @@ void LuaFunctionRegistration::RegisterFunction(
 					"Failed to register the %s.%s function. "
 					"Is SC4LuaExtensions.dat in the plugins folder?",
 					tableName,
-					std::string(info.name).c_str());
+					info.name);
 			}
 			else
 			{
 				logger.WriteLineFormatted(
 					LogLevel::Info,
 					"Failed to register the %s function.",
-					std::string(info.name).c_str());
+					info.name);
 			}
 		}
 
@@ -131,7 +131,7 @@ void LuaFunctionRegistration::RegisterFunction(
 				"Failed to register the %s.%s function. "
 				"One or more parameters were invalid.",
 				tableName,
-				std::string(info.name).c_str());
+				info.name);
 		}
 		else
 		{
@@ -139,7 +139,7 @@ void LuaFunctionRegistration::RegisterFunction(
 				LogLevel::Info,
 				"Failed to register the %s function. "
 				"One or more parameters were invalid.",
-				std::string(info.name).c_str());
+				info.name);
 		}
 	}
 }
