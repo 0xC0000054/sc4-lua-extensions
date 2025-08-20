@@ -117,6 +117,9 @@
     <ClCompile Include="LuaPrintFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.cpp">
+      <Filter>Source Files\lua-extensions\sc4game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -199,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="LuaPrintFunction.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.h">
+      <Filter>Header Files\lua-extensions\sc4game</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\LuaHelper.h">
+      <Filter>Header Files\lua-extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

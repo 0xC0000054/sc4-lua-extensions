@@ -20,31 +20,29 @@
  */
 
 #include "SC4GameBudgetTableExtensions.h"
-#include "cIGZCommandParameterSet.h"
 #include "cISC4DepartmentBudget.h"
-#include "cISC4GameDataRegistry.h"
-#include "cRZBaseVariant.h"
 #include "GlobalPointers.h"
 #include "Logger.h"
+#include "LuaFunctionRegistration.h"
+#include "LuaHelper.h"
+#include "SCLuaUtil.h"
 
 namespace
 {
-	bool get_department_total_expense(
-		void* pKey,
-		cIGZCommandParameterSet* pInput,
-		cIGZCommandParameterSet* pOutput,
-		cISC4GameDataRegistry* pRegistry)
+	int32_t get_department_total_expense(lua_State* pState)
 	{
 		int64_t total = 0;
 
-		if (pInput->GetParameterCount() == 1)
+		cRZAutoRefCount<cISCLua> lua = SCLuaUtil::GetISCLuaFromFunctionState(pState);
+
+		const int32_t parameterCount = lua->GetTop();
+
+		if (parameterCount == 1)
 		{
-			cIGZVariant* pVariant = pInput->GetParameter(0);
+			uint32_t id = 0;
 
-			if (pVariant)
+			if (LuaHelper::GetNumber(lua, -1, id))
 			{
-				uint32_t id = pVariant->GetValUint32();
-
 				const cISC4DepartmentBudget* pDepartment = spBudgetSim->GetDepartmentBudget(id);
 
 				if (pDepartment)
@@ -54,28 +52,24 @@ namespace
 			}
 		}
 
-		cRZBaseVariant outVariant(total);
-
-		pOutput->SetParameter(1, outVariant);
-		return true;
+		lua->PushNumber(static_cast<double>(total));
+		return 1;
 	}
 
-	bool get_department_total_income(
-		void* pKey,
-		cIGZCommandParameterSet* pInput,
-		cIGZCommandParameterSet* pOutput,
-		cISC4GameDataRegistry* pRegistry)
+	int32_t get_department_total_income(lua_State* pState)
 	{
 		int64_t total = 0;
 
-		if (pInput->GetParameterCount() == 1)
+		cRZAutoRefCount<cISCLua> lua = SCLuaUtil::GetISCLuaFromFunctionState(pState);
+
+		const int32_t parameterCount = lua->GetTop();
+
+		if (parameterCount == 1)
 		{
-			cIGZVariant* pVariant = pInput->GetParameter(0);
+			uint32_t id = 0;
 
-			if (pVariant)
+			if (LuaHelper::GetNumber(lua, -1, id))
 			{
-				uint32_t id = pVariant->GetValUint32();
-
 				const cISC4DepartmentBudget* pDepartment = spBudgetSim->GetDepartmentBudget(id);
 
 				if (pDepartment)
@@ -85,47 +79,23 @@ namespace
 			}
 		}
 
-		cRZBaseVariant outVariant(total);
-
-		pOutput->SetParameter(1, outVariant);
-		return true;
+		lua->PushNumber(static_cast<double>(total));
+		return 1;
 	}
 }
 
-void SC4GameBudgetTableExtensions::Register(cISC4GameDataRegistry& registry)
+SC4GameBudgetTableExtensions::SC4GameBudgetTableExtensions()
+	: SC4GameTableSCLuaBase("budget")
 {
-	Logger& logger = Logger::GetInstance();
+}
 
-	// Maxis already defined the sc4game.budget category.
-	// They used the class instance cast to cIGZUnknown as the entry identifier
-	// for the category nodes.
-
-	cRZAutoRefCount<cIGZUnknown> budgetNodeKey;
-
-	spBudgetSim->QueryInterface(GZIID_cIGZUnknown, budgetNodeKey.AsPPVoid());
-
-	auto parentNode = registry.GetEntryID(budgetNodeKey);
-
-	if (parentNode)
+std::vector<LuaFunctionRegistration::LuaFunctionInfo> SC4GameBudgetTableExtensions::GetTableFunctions() const
+{
+	std::vector<LuaFunctionRegistration::LuaFunctionInfo> functions =
 	{
-		registry.AddChildEntry(
-			&get_department_total_expense,
-			"get_department_total_expense",
-			get_department_total_expense,
-			parentNode,
-			cISC4GameDataRegistry::EntryFlagCallFunction,
-			nullptr);
+		LuaFunctionRegistration::LuaFunctionInfo("get_department_total_expense", get_department_total_expense),
+		LuaFunctionRegistration::LuaFunctionInfo("get_department_total_income", get_department_total_income),
+	};
 
-		logger.WriteLine(LogLevel::Info, "Registered the sc4game.budget.get_department_total_expense function.");
-
-		registry.AddChildEntry(
-			&get_department_total_income,
-			"get_department_total_income",
-			get_department_total_income,
-			parentNode,
-			cISC4GameDataRegistry::EntryFlagCallFunction,
-			nullptr);
-
-		logger.WriteLine(LogLevel::Info, "Registered the sc4game.budget.get_department_total_income function.");
-	}
+	return functions;
 }

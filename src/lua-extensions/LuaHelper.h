@@ -20,13 +20,40 @@
  */
 
 #pragma once
-#include "SC4GameTableSCLuaBase.h"
+#include "cISCLua.h"
+#include "SafeInt.hpp"
 
-class SC4GameBudgetTableExtensions : public SC4GameTableSCLuaBase
+namespace LuaHelper
 {
-public:
-	SC4GameBudgetTableExtensions();
+	template <typename T>
+	bool GetNumber(cISCLua* pLua, int32_t parameterIndex, T& outValue)
+	{
+		bool result = false;
 
-protected:
-	std::vector<LuaFunctionRegistration::LuaFunctionInfo> GetTableFunctions() const override;
-};
+		if (pLua && pLua->IsNumber(parameterIndex))
+		{
+			double number = pLua->ToNumber(parameterIndex);
+
+			// The native number format of SimCity 4's Lua 5.0 implementation is Float64/double.
+			// We perform our own casting for integer types in order to get an error for values
+			// that are out of range for the destination type.
+
+			if constexpr (std::is_same_v<T, double>)
+			{
+				outValue = number;
+				result = true;
+			}
+			else if constexpr (std::is_same_v<T, float>)
+			{
+				outValue = static_cast<float>(number);
+				result = true;
+			}
+			else
+			{
+				result = SafeCast(number, outValue);
+			}
+		}
+
+		return result;
+	}
+}

@@ -22,6 +22,32 @@
 #include "LuaFunctionRegistration.h"
 #include "Logger.h"
 
+void LuaFunctionRegistration::RegisterFunctionRaw(cISCLua& lua, const LuaFunctionInfo& info)
+{
+	// This function assumes that the object on the top of the Lua stack is
+	// the table that the function will re registered into.
+	// It is the caller's responsibility to ensure that this is the case.
+	// The caller is also responsible for any stack cleanup that must be performed
+	// after calling this function.
+
+	const char* const kTempFunctionName = "_temp_";
+
+	// We have to register the function with a temporary name and then rename it.
+	// Just registering the function with the intended name doesn't work.
+	//
+	// SC4 uses the same technique when registering the game table functions
+	// (e.g. game.trend_slope).
+
+	lua.Register(info.pFunction, kTempFunctionName);
+	lua.PushString(info.name);
+	lua.GetGlobal(kTempFunctionName);
+	lua.SetTable(-3);
+
+	// The lua.Pop(1) call is unnecessary, it would unbalance the Lua stack
+	// for callers that expect the input table to remain on the top of the
+	// Lua stack after registering a function.
+}
+
 void LuaFunctionRegistration::RegisterFunction(
 	cISCLua* pLua,
 	const char* tableName,
@@ -50,19 +76,7 @@ void LuaFunctionRegistration::RegisterFunction(
 
 			if (type == cIGZLua5Thread::LuaTypeTable)
 			{
-				const char* const kTempFunctionName = "_temp_";
-
-				// We have to register the function with a temporary name and then rename it.
-				// Just registering the function with the intended name doesn't work.
-				//
-				// SC4 uses the same technique when registering the game table functions
-				// (e.g. game.trend_slope).
-
-				pLua->Register(info.pFunction, kTempFunctionName);
-				pLua->PushString(info.name);
-				pLua->GetGlobal(kTempFunctionName);
-				pLua->SetTable(-3);
-				pLua->Pop(1);
+				RegisterFunctionRaw(*pLua, info);
 
 				if (tableName)
 				{

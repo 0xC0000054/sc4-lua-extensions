@@ -42,6 +42,14 @@ namespace LuaFunctionRegistration
 		}
 	};
 
+	// Registers the function into the table at the top of the Lua stack.
+	// The caller is responsible for ensuring that the object at the top
+	// of the Lua stack is a table, and performing any stack cleanup.
+	// This function does not modify the Lua stack position.
+	void RegisterFunctionRaw(
+		cISCLua& lua,
+		const LuaFunctionInfo& info);
+
 	void RegisterFunction(
 		cISCLua* pLua,
 		const char* tableName,

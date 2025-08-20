@@ -216,12 +216,16 @@ public:
 
 			cISCLua* pLua = spCity->GetAdvisorSystem()->GetScriptingContext();
 
-			if (!replacedMaxisPrintFunctionPointers)
+			if (pLua)
 			{
-				LuaPrintFunction::RegisterFallbackPrintFunction(pLua);
-			}
+				if (!replacedMaxisPrintFunctionPointers)
+				{
+					LuaPrintFunction::RegisterFallbackPrintFunction(pLua);
+				}
 
-			GameTableExtensions::Register(pLua);
+				GameTableExtensions::Register(pLua);
+				sc4gameBudgetTable.Register(*pLua);
+			}
 
 			// The GameDataRegistry class that is used to register the sc4game methods appears
 			// to have been intended as a way for C++ classes to add lua functions, it allows
@@ -231,7 +235,6 @@ public:
 
 			if (registry)
 			{
-				SC4GameBudgetTableExtensions::Register(*registry);
 				sc4gameCameraTable.Register(*registry);
 				sc4gameCityTable.Register(*registry);
 				sc4gameLanguageTable.Register(*registry);
@@ -415,6 +418,7 @@ public:
 		return true;
 	}
 
+	SC4GameBudgetTableExtensions sc4gameBudgetTable;
 	SC4GameCameraTable sc4gameCameraTable;
 	SC4GameCityTable sc4gameCityTable;
 	SC4GameLanguageTable sc4gameLanguageTable;

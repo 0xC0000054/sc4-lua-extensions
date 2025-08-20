@@ -20,13 +20,22 @@
  */
 
 #pragma once
-#include "SC4GameTableSCLuaBase.h"
+#include "cISCLua.h"
+#include "LuaFunctionRegistration.h"
+#include <vector>
 
-class SC4GameBudgetTableExtensions : public SC4GameTableSCLuaBase
+class SC4GameTableSCLuaBase
 {
+protected:
+	SC4GameTableSCLuaBase(const char* tableName);
+
 public:
-	SC4GameBudgetTableExtensions();
+	void Register(cISCLua& lua) const;
 
 protected:
-	std::vector<LuaFunctionRegistration::LuaFunctionInfo> GetTableFunctions() const override;
+	virtual std::vector<LuaFunctionRegistration::LuaFunctionInfo> GetTableFunctions() const = 0;
+
+private:
+	// Private members
+	const char* tableName;
 };

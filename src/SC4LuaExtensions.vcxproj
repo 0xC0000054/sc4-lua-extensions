@@ -34,6 +34,7 @@
     <ClCompile Include="lua-extensions\sc4game\SC4GameCityTable.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameLanguageTable.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameTableBase.cpp" />
+    <ClCompile Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.cpp" />
     <ClCompile Include="LuaExtensionsDllDirector.cpp" />
     <ClCompile Include="LuaPrintFunction.cpp" />
     <ClCompile Include="PackageScriptLoadingPatch.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="DebugUtil.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="lua-extensions\LuaHelper.h" />
     <ClInclude Include="lua-extensions\LuaIGZVariantHelper.h" />
     <ClInclude Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameBudgetTableExtensions.h" />
@@ -63,6 +65,7 @@
     <ClInclude Include="lua-extensions\sc4game\SC4GameCityTable.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameLanguageTable.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameTableBase.h" />
+    <ClInclude Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.h" />
     <ClInclude Include="LuaPrintFunction.h" />
     <ClInclude Include="PackageScriptLoadingPatch.h" />
     <ClInclude Include="Patcher.h" />
