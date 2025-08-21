@@ -4,13 +4,6 @@
 -- The Maxis files that define the game and sc4game tables have already been run.
 
 ---------------------------------------------------------------------------------
--- Global functions
----------------------------------------------------------------------------------
-
--- Writes the specified arguments to SC4LuaExtensions.log
-print = function() end
-
----------------------------------------------------------------------------------
 -- game table extensions
 ---------------------------------------------------------------------------------
 
