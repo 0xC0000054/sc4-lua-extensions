@@ -120,6 +120,9 @@
     <ClCompile Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.cpp">
       <Filter>Source Files\lua-extensions\sc4game</Filter>
     </ClCompile>
+    <ClCompile Include="lua-extensions\LuaHelper.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">

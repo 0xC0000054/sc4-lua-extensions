@@ -20,12 +20,11 @@
  */
 
 #include "GameTableExtensions.h"
-#include "cIGZCommandParameterSet.h"
 #include "cRZAutoRefCount.h"
 #include "cRZBaseString.h"
 #include "GlobalPointers.h"
 #include "LuaFunctionRegistration.h"
-#include "LuaIGZVariantHelper.h"
+#include "LuaHelper.h"
 #include "SafeInt.hpp"
 #include "SCLuaUtil.h"
 #include <algorithm>
@@ -96,67 +95,6 @@ namespace
 		return result;
 	}
 
-	void SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandParameterSet* pParameterSet)
-	{
-		if (pParameterSet)
-		{
-			uint32_t parameterCount = pParameterSet->GetParameterCount();
-
-			if (parameterCount == 0)
-			{
-				pLua->PushNil();
-			}
-			else if (parameterCount == 1)
-			{
-				const uint32_t id = pParameterSet->GetFirstParameterID();
-				const cIGZVariant* pVariant = pParameterSet->GetParameter(id);
-
-				if (id == cIGZCommandParameterSet::kStatusParameterID)
-				{
-					pLua->PushBoolean(pVariant->GetValSint32() == 0);
-				}
-				else
-				{
-					LuaIGZVariantHelper::PushValuesToLua(pLua, pVariant);
-				}
-			}
-			else
-			{
-				pParameterSet->RemoveParameter(cIGZCommandParameterSet::kStatusParameterID);
-
-				parameterCount = pParameterSet->GetParameterCount();
-
-				if (parameterCount > 1)
-				{
-					if (parameterCount < static_cast<uint32_t>(std::numeric_limits<int32_t>::max() - 1))
-					{
-						// Lua uses a one-based index for arrays.
-						int32_t luaTableIndex = 1;
-
-						for (uint32_t id = pParameterSet->GetFirstParameterID(); id != UINT_MAX; id = pParameterSet->GetNextParameterID(id))
-						{
-							LuaIGZVariantHelper::PushValuesToLua(pLua, pParameterSet->GetParameter(id));
-							pLua->RawSetI(-2, luaTableIndex++);
-						}
-					}
-					else
-					{
-						pLua->PushNil();
-					}
-				}
-				else
-				{
-					const uint32_t id = pParameterSet->GetFirstParameterID();
-					LuaIGZVariantHelper::PushValuesToLua(pLua, pParameterSet->GetParameter(id));
-				}
-			}
-		}
-		else
-		{
-			pLua->PushNil();
-		}
-	}
-
 	int32_t execute_cheat(lua_State* pState)
 	{
 		cRZAutoRefCount<cISCLua> lua = SCLuaUtil::GetISCLuaFromFunctionState(pState);
@@ -181,7 +119,7 @@ namespace
 
 					if (ExecuteCommand(command, outputParameters))
 					{
-						SetResultFromIGZCommandParameterSet(lua, outputParameters);
+						LuaHelper::SetResultFromIGZCommandParameterSet(lua, outputParameters);
 					}
 					else
 					{

@@ -20,6 +20,7 @@
  */
 
 #pragma once
+#include "cIGZCommandParameterSet.h"
 #include "cISCLua.h"
 #include "SafeInt.hpp"
 
@@ -56,4 +57,6 @@ namespace LuaHelper
 
 		return result;
 	}
+
+	void SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandParameterSet* pParameterSet);
 }

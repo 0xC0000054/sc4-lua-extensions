@@ -27,6 +27,7 @@
     <ClCompile Include="lua-extensions\GameTableExtensions.cpp" />
     <ClCompile Include="lua-extensions\LuaFunctionRegistration.cpp" />
     <ClCompile Include="lua-extensions\LuaExtensionFunctionTests.cpp" />
+    <ClCompile Include="lua-extensions\LuaHelper.cpp" />
     <ClCompile Include="lua-extensions\LuaIGZVariantHelper.cpp" />
     <ClCompile Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameBudgetTableExtensions.cpp" />
