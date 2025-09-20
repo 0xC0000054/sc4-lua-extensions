@@ -21,6 +21,7 @@
 
 #pragma once
 #include "cIGZCommandParameterSet.h"
+#include "cIGZVariant.h"
 #include "cISCLua.h"
 #include "SafeInt.hpp"
 
@@ -58,5 +59,57 @@ namespace LuaHelper
 		return result;
 	}
 
+	template <typename T>
+	void PushValue(cISCLua* pLua, T value)
+	{
+		if constexpr (std::is_same_v<T, bool>)
+		{
+			pLua->PushBoolean(value);
+		}
+		else if constexpr (
+			std::is_same_v<T, uint8_t>
+			|| std::is_same_v<T, int8_t>
+			|| std::is_same_v<T, uint16_t>
+			|| std::is_same_v<T, int16_t>
+			|| std::is_same_v<T, uint32_t>
+			|| std::is_same_v<T, int32_t>
+			|| std::is_same_v<T, uint64_t>
+			|| std::is_same_v<T, int64_t>
+			|| std::is_same_v<T, float>
+			|| std::is_same_v<T, double>)
+		{
+			pLua->PushNumber(static_cast<double>(value));
+		}
+		else
+		{
+			static_assert(false, "Unsupported parameter type for PushValue");
+		}
+	}
+
+	template <typename T>
+	void CreateLuaArray(cISCLua* pLua, const T* values, uint32_t count)
+	{
+		if (count == 1)
+		{
+			PushValue(pLua, *values);
+		}
+		else if (count < static_cast<uint32_t>(std::numeric_limits<int32_t>::max() - 1))
+		{
+			pLua->NewTable();
+
+			for (uint32_t i = 0; i < count; i++)
+			{
+				PushValue(pLua, values[i]);
+				// Lua uses a one-based index for arrays.
+				pLua->RawSetI(-2, static_cast<int32_t>(i + 1));
+			}
+		}
+		else
+		{
+			pLua->PushNil();
+		}
+	}
+
 	void SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandParameterSet* pParameterSet);
+	void SetResultFromIGZVariant(cISCLua* pLua, const cIGZVariant* pVariant);
 }

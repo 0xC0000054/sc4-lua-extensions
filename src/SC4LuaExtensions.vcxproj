@@ -24,11 +24,11 @@
     <ClCompile Include="DebugUtil.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="lua-extensions\DBPFTableFunctions.cpp" />
     <ClCompile Include="lua-extensions\GameTableExtensions.cpp" />
     <ClCompile Include="lua-extensions\LuaFunctionRegistration.cpp" />
     <ClCompile Include="lua-extensions\LuaExtensionFunctionTests.cpp" />
     <ClCompile Include="lua-extensions\LuaHelper.cpp" />
-    <ClCompile Include="lua-extensions\LuaIGZVariantHelper.cpp" />
     <ClCompile Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameBudgetTableExtensions.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameCameraTable.cpp" />
@@ -52,6 +52,7 @@
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISCLua.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCLuaUtil.h" />
     <ClInclude Include="GlobalPointers.h" />
+    <ClInclude Include="lua-extensions\DBPFTableFunctions.h" />
     <ClInclude Include="lua-extensions\GameTableExtensions.h" />
     <ClInclude Include="lua-extensions\LuaFunctionRegistration.h" />
     <ClInclude Include="lua-extensions\LuaExtensionFunctionTests.h" />
@@ -59,7 +60,6 @@
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="lua-extensions\LuaHelper.h" />
-    <ClInclude Include="lua-extensions\LuaIGZVariantHelper.h" />
     <ClInclude Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameBudgetTableExtensions.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameCameraTable.h" />

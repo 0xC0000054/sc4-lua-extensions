@@ -20,7 +20,7 @@
  */
 
 #include "LuaHelper.h"
-#include "LuaIGZVariantHelper.h"
+#include "cRZBaseString.h"
 
 void LuaHelper::SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandParameterSet* pParameterSet)
 {
@@ -43,7 +43,7 @@ void LuaHelper::SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandPa
 			}
 			else
 			{
-				LuaIGZVariantHelper::PushValuesToLua(pLua, pVariant);
+				SetResultFromIGZVariant(pLua, pVariant);
 			}
 		}
 		else
@@ -61,7 +61,7 @@ void LuaHelper::SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandPa
 
 					for (uint32_t id = pParameterSet->GetFirstParameterID(); id != UINT_MAX; id = pParameterSet->GetNextParameterID(id))
 					{
-						LuaIGZVariantHelper::PushValuesToLua(pLua, pParameterSet->GetParameter(id));
+						SetResultFromIGZVariant(pLua, pParameterSet->GetParameter(id));
 						pLua->RawSetI(-2, luaTableIndex++);
 					}
 				}
@@ -73,12 +73,93 @@ void LuaHelper::SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandPa
 			else
 			{
 				const uint32_t id = pParameterSet->GetFirstParameterID();
-				LuaIGZVariantHelper::PushValuesToLua(pLua, pParameterSet->GetParameter(id));
+				SetResultFromIGZVariant(pLua, pParameterSet->GetParameter(id));
 			}
 		}
 	}
 	else
 	{
 		pLua->PushNil();
+	}
+}
+
+void LuaHelper::SetResultFromIGZVariant(cISCLua* pLua, const cIGZVariant* pVariant)
+{
+	const cIGZVariant::Type type = static_cast<cIGZVariant::Type>(pVariant->GetType());
+
+	switch (type)
+	{
+	case cIGZVariant::Type::Bool:
+		PushValue(pLua, pVariant->GetValBool());
+		break;
+	case cIGZVariant::Type::BoolArray:
+		CreateLuaArray(pLua, pVariant->RefBool(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Uint8:
+		PushValue(pLua, pVariant->GetValUint8());
+		break;
+	case cIGZVariant::Type::Uint8Array:
+		CreateLuaArray(pLua, pVariant->RefUint8(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Sint8:
+		PushValue(pLua, pVariant->GetValSint8());
+		break;
+	case cIGZVariant::Type::Sint8Array:
+		CreateLuaArray(pLua, pVariant->RefSint8(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Uint16:
+		PushValue(pLua, pVariant->GetValUint16());
+		break;
+	case cIGZVariant::Type::Uint16Array:
+		CreateLuaArray(pLua, pVariant->RefUint16(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Sint16:
+		PushValue(pLua, pVariant->GetValSint16());
+		break;
+	case cIGZVariant::Type::Sint16Array:
+		CreateLuaArray(pLua, pVariant->RefSint16(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Uint32:
+		PushValue(pLua, pVariant->GetValUint32());
+		break;
+	case cIGZVariant::Type::Uint32Array:
+		CreateLuaArray(pLua, pVariant->RefUint32(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Sint32:
+		PushValue(pLua, pVariant->GetValSint32());
+		break;
+	case cIGZVariant::Type::Sint32Array:
+		CreateLuaArray(pLua, pVariant->RefSint32(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Uint64:
+		PushValue(pLua, pVariant->GetValUint64());
+		break;
+	case cIGZVariant::Type::Uint64Array:
+		CreateLuaArray(pLua, pVariant->RefUint64(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Sint64:
+		PushValue(pLua, pVariant->GetValSint64());
+		break;
+	case cIGZVariant::Type::Sint64Array:
+		CreateLuaArray(pLua, pVariant->RefSint64(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Float32:
+		PushValue(pLua, pVariant->GetValFloat32());
+		break;
+	case cIGZVariant::Type::Float32Array:
+		CreateLuaArray(pLua, pVariant->RefFloat32(), pVariant->GetCount());
+		break;
+	case cIGZVariant::Type::Float64:
+		PushValue(pLua, pVariant->GetValFloat64());
+		break;
+	case cIGZVariant::Type::Float64Array:
+		CreateLuaArray(pLua, pVariant->RefFloat64(), pVariant->GetCount());
+		break;
+	default:
+		cRZBaseString asString;
+		pVariant->GetValString(asString);
+
+		pLua->PushLString(asString.Data(), asString.Strlen());
+		break;
 	}
 }
