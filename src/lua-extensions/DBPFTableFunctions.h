@@ -20,19 +20,9 @@
  */
 
 #pragma once
-#include "cIGZCheatCodeManager.h"
-#include "cIGZPersistResourceManager.h"
-#include "cIGZCommandServer.h"
-#include "cISC4BudgetSimulator.h"
-#include "cISC4City.h"
-#include "cISC4Simulator.h"
-#include "cISC4View3DWin.h"
-#include "cRZAutoRefCount.h"
+#include "cISCLua.h"
 
-extern cIGZCheatCodeManager* spCCM;
-extern cRZAutoRefCount<cIGZCommandServer> spCommandServer;
-extern cRZAutoRefCount<cIGZPersistResourceManager> spResourceManager;
-extern cISC4BudgetSimulator* spBudgetSim;
-extern cISC4City* spCity;
-extern cISC4Simulator* spSimulator;
-extern cRZAutoRefCount<cISC4View3DWin> spView3D;
+namespace DBPFTableFunctions
+{
+	void Register(cISCLua* pLua);
+}

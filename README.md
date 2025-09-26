@@ -1,11 +1,6 @@
 # sc4-lua-extensions
 
-This DLL provides a number of functions that allow Lua scripts to do the following.
-
-* Run cheats and pause/resume the game.
-* Have better access to SC4's built-in number formatting.
-* Get or set the city/mayor names and plop lots.
-* Manipulate the in-game camera and take snapshots.
+This DLL provides a number of functions for the game's Lua scripts.
 
 See [null45_lua_extensions.lua](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/dat/null45_lua_extensions.lua) for a list of the provided functions,
 and [null45_lua_extensions_tests.lua](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/dat/null45_lua_extensions_tests.lua) for examples of their use.

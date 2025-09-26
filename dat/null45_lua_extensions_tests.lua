@@ -4,6 +4,33 @@
 -- The following code is used to test the lua_extensions functions.
 -- It also serves as examples of their use.
 
+function null45_lua_extensions_test_dbpf_get_cohort_property_value()  
+  -- Load the Exemplar Name property from 0x05342861 0x67BDDF0C 0x00000001.
+  local group_id = hex2dec('67bddf0c')
+  local instance_id = 1
+  local property_id = 32
+  
+  return dbpf.get_cohort_property_value(group_id, instance_id, property_id)
+end
+
+function null45_lua_extensions_test_dbpf_get_exemplar_property_value()
+  -- Load the MaxTerrainHeight property from 0x6534284A 0x88CD66E9 0x00000001.
+  local group_id = hex2dec('88cd66e9')
+  local instance_id = 1
+  local property_id = hex2dec('48cd7b26')
+  
+  return "MaxTerrainHeight=" .. tostring(dbpf.get_exemplar_property_value(group_id, instance_id, property_id))
+end
+
+function null45_lua_extensions_test_dbpf_resource_exists()  
+  -- 0xEA5118B0 0xEA5118B1 0x00000001 is the Effect Directory in SimCity_1.dat.
+  local type_id = hex2dec('ea5118b0')
+  local group_id = hex2dec('ea5118b1')
+  local instance_id = 1
+  
+  return tostring(dbpf.resource_exists(type_id, group_id, instance_id))
+end
+
 function null45_lua_extensions_test_execute_cheat()
   return tostring(game.execute_cheat('moolah 1000000000'))
 end

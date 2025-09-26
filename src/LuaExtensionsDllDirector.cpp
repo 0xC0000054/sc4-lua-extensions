@@ -42,6 +42,7 @@
 #include "LuaPrintFunction.h"
 #include "PackageScriptLoadingPatch.h"
 
+#include "DBPFTableFunctions.h"
 #include "GameTableExtensions.h"
 #include "SC4GameBudgetTableExtensions.h"
 #include "SC4GameCameraTable.h"
@@ -81,9 +82,10 @@ static constexpr std::string_view kHideMaxisLuaDebugTextCheatStr = "HideMaxisLua
 
 cIGZCheatCodeManager* spCCM = nullptr;
 cRZAutoRefCount<cIGZCommandServer> spCommandServer;
-cISC4BudgetSimulator* spBudgetSim;
-cISC4City* spCity;
-cISC4Simulator* spSimulator;
+cRZAutoRefCount<cIGZPersistResourceManager> spResourceManager;
+cISC4BudgetSimulator* spBudgetSim = nullptr;
+cISC4City* spCity = nullptr;
+cISC4Simulator* spSimulator = nullptr;
 cRZAutoRefCount<cISC4View3DWin> spView3D;
 
 namespace
@@ -223,6 +225,7 @@ public:
 					LuaPrintFunction::RegisterFallbackPrintFunction(pLua);
 				}
 
+				DBPFTableFunctions::Register(pLua);
 				GameTableExtensions::Register(pLua);
 				sc4gameBudgetTable.Register(*pLua);
 			}
@@ -370,6 +373,8 @@ public:
 
 		cIGZCommandServerPtr commandServer;
 		spCommandServer = commandServer;
+		cIGZPersistResourceManagerPtr resourceManager;
+		spResourceManager = resourceManager;
 
 		sc4gameLanguageTable.PostAppInit(mpFrameWork);
 
@@ -395,6 +400,7 @@ public:
 
 		spCCM = nullptr;
 		spCommandServer.Reset();
+		spResourceManager.Reset();
 		sc4gameLanguageTable.PreAppShutdown();
 
 		return true;

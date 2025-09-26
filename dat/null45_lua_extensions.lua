@@ -4,6 +4,25 @@
 -- The Maxis files that define the game and sc4game tables have already been run.
 
 ---------------------------------------------------------------------------------
+-- dbpf table
+---------------------------------------------------------------------------------
+
+dbpf = {}
+
+-- Reads the specified cohort property.
+-- The returned type will depend on the property type.
+-- Nil is returned if the cohort/property does not exist.
+dbpf.get_cohort_property_value = function(group_id, instance_id, property_id) return nil end
+
+-- Reads the specified exemplar property.
+-- The returned type will depend on the property type.
+-- Nil is returned if the exemplar/property does not exist.
+dbpf.get_exemplar_property_value = function(group_id, instance_id, property_id) return nil end
+
+-- Gets a value indicating if the specified TGI exists in the game.
+dbpf.resource_exists = function(type_id, group_id, instance_id) return false end
+
+---------------------------------------------------------------------------------
 -- game table extensions
 ---------------------------------------------------------------------------------
 
