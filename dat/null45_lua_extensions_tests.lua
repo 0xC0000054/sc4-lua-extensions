@@ -6,7 +6,9 @@
 
 function null45_lua_extensions_test_dbpf_get_cohort_property_value()  
   -- Load the Exemplar Name property from 0x05342861 0x67BDDF0C 0x00000001.
-  local group_id = hex2dec('67bddf0c')
+  -- The group_id, instance_id, and property_id values can be either a number
+  -- or a hexadecimal string.
+  local group_id = '67bddf0c'
   local instance_id = 1
   local property_id = 32
   
@@ -15,17 +17,21 @@ end
 
 function null45_lua_extensions_test_dbpf_get_exemplar_property_value()
   -- Load the MaxTerrainHeight property from 0x6534284A 0x88CD66E9 0x00000001.
-  local group_id = hex2dec('88cd66e9')
+  -- The group_id, instance_id, and property_id values can be either a number
+  -- or a hexadecimal string.
+  local group_id = '88cd66e9'
   local instance_id = 1
-  local property_id = hex2dec('48cd7b26')
+  local property_id = '0x48cd7b26'
   
   return "MaxTerrainHeight=" .. tostring(dbpf.get_exemplar_property_value(group_id, instance_id, property_id))
 end
 
 function null45_lua_extensions_test_dbpf_resource_exists()  
   -- 0xEA5118B0 0xEA5118B1 0x00000001 is the Effect Directory in SimCity_1.dat.
-  local type_id = hex2dec('ea5118b0')
-  local group_id = hex2dec('ea5118b1')
+  -- The type_id, group_id, and instance_id values can be either a number
+  -- or a hexadecimal string.
+  local type_id = 'ea5118b0'
+  local group_id = 'ea5118b1'
   local instance_id = 1
   
   return tostring(dbpf.resource_exists(type_id, group_id, instance_id))
@@ -56,12 +62,18 @@ end
 
 function null45_lua_extensions_test_get_budget_department_total_expense()
   -- Get the total expense from the police budget department.
-  return tostring(sc4game.budget.get_department_total_expense(hex2dec('a2963983')))
+  -- The department_guid can be either a number or a hexadecimal string.
+  local department_guid = 'a2963983'
+  
+  return tostring(sc4game.budget.get_department_total_expense(department_guid))
 end
 
 function null45_lua_extensions_test_get_budget_department_total_income()
   -- Get the total income from the police budget department.
-  return tostring(sc4game.budget.get_department_total_income(hex2dec('a2963983')))
+  -- The department_guid can be either a number or a hexadecimal string.
+  local department_guid = hex2dec('a2963983')
+  
+  return tostring(sc4game.budget.get_department_total_income(department_guid))
 end
 
 -- sc4game.language functions
@@ -132,8 +144,11 @@ function null45_lua_extensions_test_place_lot()
   local cell_x = 50  
   local cell_z = 50
   local orientation = sc4game_city_place_lot_orientation.NORTH
+  -- The lot_exemplar_id and building_exemplar_id values can be either a number
+  -- or a hexadecimal string.
   local lot_exemplar_id = hex2dec('60000462')
-  local building_exemplar_id = hex2dec('6070000')    
+  local building_exemplar_id = '6070000'    
+  
   return tostring(sc4game.city.place_lot(cell_x, cell_z, orientation, lot_exemplar_id, building_exemplar_id))
 end
 
