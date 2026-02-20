@@ -2,7 +2,7 @@
  * This file is part of sc4-lua-extensions, a DLL Plugin for SimCity 4
  * that extends the game's Lua system with new functions.
  *
- * Copyright (C) 2025 Nicholas Hayes
+ * Copyright (C) 2025, 2026 Nicholas Hayes
  *
  * sc4-lua-extensions is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License as
