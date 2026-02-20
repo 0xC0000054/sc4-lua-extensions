@@ -48,7 +48,8 @@ namespace
 		uint32_t instanceID = 0;
 		uint32_t propertyID = 0;
 
-		if (spResourceManager
+		if (LuaHelper::FunctionHasParameterCount(lua, 3)
+			&& spResourceManager
 			&& LuaHelper::GetNumber(lua, 1, groupID)
 			&& LuaHelper::GetNumber(lua, 2, instanceID)
 			&& LuaHelper::GetNumber(lua, 3, propertyID))
@@ -93,7 +94,8 @@ namespace
 		uint32_t instanceID = 0;
 		uint32_t propertyID = 0;
 
-		if (spResourceManager
+		if (LuaHelper::FunctionHasParameterCount(lua, 3)
+			&& spResourceManager
 			&& LuaHelper::GetNumber(lua, 1, groupID)
 			&& LuaHelper::GetNumber(lua, 2, instanceID)
 			&& LuaHelper::GetNumber(lua, 3, propertyID))
@@ -136,7 +138,8 @@ namespace
 
 		cGZPersistResourceKey key;
 
-		if (spResourceManager
+		if (LuaHelper::FunctionHasParameterCount(lua, 3)
+			&& spResourceManager
 			&& LuaHelper::GetNumber(lua, 1, key.type)
 			&& LuaHelper::GetNumber(lua, 2, key.group)
 			&& LuaHelper::GetNumber(lua, 3, key.instance))

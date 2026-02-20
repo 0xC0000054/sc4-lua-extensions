@@ -22,6 +22,12 @@
 #include "LuaHelper.h"
 #include "cRZBaseString.h"
 
+bool LuaHelper::FunctionHasParameterCount(cISCLua* pLua, int32_t requiredParemeterCount)
+{
+	// When Lua calls a native function, GetTop is set to the number of input parameters.
+	return pLua && pLua->GetTop() == requiredParemeterCount;
+}
+
 void LuaHelper::SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandParameterSet* pParameterSet)
 {
 	if (pParameterSet)

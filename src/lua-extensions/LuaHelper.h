@@ -151,6 +151,7 @@ namespace LuaHelper
 		}
 	}
 
+	bool FunctionHasParameterCount(cISCLua* pLua, int32_t requiredParemeterCount);
 	void SetResultFromIGZCommandParameterSet(cISCLua* pLua, cIGZCommandParameterSet* pParameterSet);
 	void SetResultFromIGZVariant(cISCLua* pLua, const cIGZVariant* pVariant);
 }
