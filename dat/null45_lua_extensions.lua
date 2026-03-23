@@ -1,7 +1,7 @@
 --#-package:0454ce10# -- package signature --
 -- Any Lua files that depend on this file must have higher package numbers.
 
--- The Maxis files that define the game and sc4game tables have already been run.
+dofile("adv_game_data.lua") -- for the game and sc4game tables
 
 ---------------------------------------------------------------------------------
 -- dbpf table
