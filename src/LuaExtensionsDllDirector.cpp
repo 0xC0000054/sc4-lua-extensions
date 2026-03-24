@@ -37,10 +37,13 @@
 #include "cRZMessage2COMDirector.h"
 #include "cRZMessage2Standard.h"
 #include "cRZBaseString.h"
+#include "DebugUtil.h"
 #include "GlobalPointers.h"
 #include "GZServPtrs.h"
 #include "LuaPrintFunction.h"
+#include "PackageScriptCompilationCallbackServer.h"
 #include "PackageScriptLoadingPatch.h"
+#include "SC4VersionDetection.h"
 
 #include "DBPFTableFunctions.h"
 #include "GameTableExtensions.h"
@@ -187,12 +190,22 @@ namespace
 
 		return view3D;
 	}
+
+#ifdef _DEBUG
+	void DebugLogCompiledScriptTGI(cGZPersistResourceKey const& key, void* pContext)
+	{
+		DebugUtil::PrintLineToDebugOutputFormatted("Script [0x%08X, 0x%08X, 0x%08X] loaded.", key.type, key.group, key.instance);
+	}
+#endif // _DEBUG
 }
 
 class LuaExtensionsDllDirector : public cRZMessage2COMDirector
 {
 public:
-	LuaExtensionsDllDirector() : replacedMaxisPrintFunctionPointers(false)
+	LuaExtensionsDllDirector()
+		: replacedMaxisPrintFunctionPointers(false),
+		  installedPackageScriptLoadingPatch(false),
+		  addedScriptCompilationCallback(false)
 	{
 		std::filesystem::path logFilePath = FileSystem::GetPluginLogFilePath();
 
@@ -206,6 +219,26 @@ public:
 		return kLuaExtensionsDirectorID;
 	}
 
+	void EnumClassObjects(ClassObjectEnumerationCallback pCallback, void* pContext)
+	{
+		if (SC4VersionDetection::IsVersion641())
+		{
+			pCallback(GZCLSID_PackageScriptCompilationCallbackServer, 0, pContext);
+		}
+	}
+
+	bool GetClassObject(uint32_t rclsid, uint32_t riid, void** ppvObj)
+	{
+		bool result = false;
+
+		if (rclsid == GZCLSID_PackageScriptCompilationCallbackServer && installedPackageScriptLoadingPatch)
+		{
+			result = packageScriptCompilationCallbackServer.QueryInterface(riid, ppvObj);
+		}
+
+		return result;
+	}
+
 	void PostCityInit(cIGZMessage2Standard* pStandardMsg)
 	{
 		spCity = static_cast<cISC4City*>(pStandardMsg->GetVoid1());
@@ -216,31 +249,9 @@ public:
 			spSimulator = spCity->GetSimulator();
 			spView3D = GetView3DWin();
 
-			cISCLua* pLua = spCity->GetAdvisorSystem()->GetScriptingContext();
-
-			if (pLua)
+			if (!addedScriptCompilationCallback)
 			{
-				if (!replacedMaxisPrintFunctionPointers)
-				{
-					LuaPrintFunction::RegisterFallbackPrintFunction(pLua);
-				}
-
-				DBPFTableFunctions::Register(pLua);
-				GameTableExtensions::Register(pLua);
-				sc4gameBudgetTable.Register(*pLua);
-			}
-
-			// The GameDataRegistry class that is used to register the sc4game methods appears
-			// to have been intended as a way for C++ classes to add lua functions, it allows
-			// a pointer to the class to be stored as user data for the function.
-
-			cISC4GameDataRegistryPtr registry;
-
-			if (registry)
-			{
-				sc4gameCameraTable.Register(*registry);
-				sc4gameCityTable.Register(*registry);
-				sc4gameLanguageTable.Register(*registry);
+				RegisterNativeLuaFunctions(spCity->GetAdvisorSystem()->GetScriptingContext());
 			}
 		}
 	}
@@ -371,6 +382,26 @@ public:
 			}
 		}
 
+		if (installedPackageScriptLoadingPatch)
+		{
+#ifdef _DEBUG
+			packageScriptCompilationCallbackServer.AddAnyScriptCompiledCallback(DebugLogCompiledScriptTGI, nullptr);
+#endif // _DEBUG
+
+			// Request a callback when the script that defines the Lua prototypes for our native
+			// functions is compiled.
+			// This is required to allow dependent Lua scripts to use our native functions to
+			// initialize their global variables, which is performed when the script is compiled.
+			// For example, some scripts use dbpf.get_exemplar_property_value to initialize
+			// global variables from exemplar properties.
+			//
+			// If the callback could not be registered, the native functions will be initialized in PostCityInit.
+			addedScriptCompilationCallback = packageScriptCompilationCallbackServer.AddTargetScriptCompiledCallback(
+				cGZPersistResourceKey(0xCA63E2A3, 0x4A5E8EF6, 0xAE36ED6A),
+				RegisterNativeLuaFunctionsStatic,
+				this);
+		}
+
 		cIGZCommandServerPtr commandServer;
 		spCommandServer = commandServer;
 		cIGZPersistResourceManagerPtr resourceManager;
@@ -409,7 +440,7 @@ public:
 	bool OnStart(cIGZCOM * pCOM)
 	{
 		replacedMaxisPrintFunctionPointers = LuaPrintFunction::PatchMaxisPrintFunctionPointers();
-		PackageScriptLoadingPatch::Install();
+		installedPackageScriptLoadingPatch = PackageScriptLoadingPatch::Install();
 
 		const cIGZFrameWork::FrameworkState state = mpFrameWork->GetState();
 
@@ -424,11 +455,47 @@ public:
 		return true;
 	}
 
+	void RegisterNativeLuaFunctions(cISCLua* pLua)
+	{
+		if (pLua)
+		{
+			if (!replacedMaxisPrintFunctionPointers)
+			{
+				LuaPrintFunction::RegisterFallbackPrintFunction(pLua);
+			}
+
+			DBPFTableFunctions::Register(pLua);
+			GameTableExtensions::Register(pLua);
+			sc4gameBudgetTable.Register(*pLua);
+		}
+
+		// The GameDataRegistry class that is used to register the sc4game methods appears
+		// to have been intended as a way for C++ classes to add lua functions, it allows
+		// a pointer to the class to be stored as user data for the function.
+
+		cISC4GameDataRegistryPtr registry;
+
+		if (registry)
+		{
+			sc4gameCameraTable.Register(*registry);
+			sc4gameCityTable.Register(*registry);
+			sc4gameLanguageTable.Register(*registry);
+		}
+	}
+
+	static void RegisterNativeLuaFunctionsStatic(cGZPersistResourceKey const&, cISCLua* pLua, void* pContext)
+	{
+		static_cast<LuaExtensionsDllDirector*>(pContext)->RegisterNativeLuaFunctions(pLua);
+	}
+
 	SC4GameBudgetTableExtensions sc4gameBudgetTable;
 	SC4GameCameraTable sc4gameCameraTable;
 	SC4GameCityTable sc4gameCityTable;
 	SC4GameLanguageTable sc4gameLanguageTable;
+	PackageScriptCompilationCallbackServer packageScriptCompilationCallbackServer;
 	bool replacedMaxisPrintFunctionPointers;
+	bool installedPackageScriptLoadingPatch;
+	bool addedScriptCompilationCallback;
 };
 
 cRZCOMDllDirector* RZGetCOMDllDirector() {

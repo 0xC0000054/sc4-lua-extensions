@@ -38,6 +38,7 @@
     <ClCompile Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.cpp" />
     <ClCompile Include="LuaExtensionsDllDirector.cpp" />
     <ClCompile Include="LuaPrintFunction.cpp" />
+    <ClCompile Include="PackageScriptCompilationCallbackServer.cpp" />
     <ClCompile Include="PackageScriptLoadingPatch.cpp" />
     <ClCompile Include="Patcher.cpp" />
     <ClCompile Include="SC4VersionDetection.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISCLua.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCLuaUtil.h" />
     <ClInclude Include="GlobalPointers.h" />
+    <ClInclude Include="IScriptCompilationCallback.h" />
     <ClInclude Include="lua-extensions\DBPFTableFunctions.h" />
     <ClInclude Include="lua-extensions\GameTableExtensions.h" />
     <ClInclude Include="lua-extensions\LuaFunctionRegistration.h" />
@@ -68,8 +70,10 @@
     <ClInclude Include="lua-extensions\sc4game\SC4GameTableBase.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.h" />
     <ClInclude Include="LuaPrintFunction.h" />
+    <ClInclude Include="PackageScriptCompilationCallbackServer.h" />
     <ClInclude Include="PackageScriptLoadingPatch.h" />
     <ClInclude Include="Patcher.h" />
+    <ClInclude Include="public\include\cIPackageScriptCompilationCallbackServer.h" />
     <ClInclude Include="SC4VersionDetection.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>
@@ -124,7 +128,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -148,7 +152,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

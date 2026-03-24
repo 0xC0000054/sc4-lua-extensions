@@ -99,8 +99,9 @@ namespace
 
 void LuaExtensionFunctionTests::Run(cISCLua* pLua)
 {
-	constexpr std::array<const char*, 29> LuaTestFunctions =
+	constexpr std::array<const char*, 30> LuaTestFunctions =
 	{
+		"null45_lua_extensions_test_dbpf_compile_time_variable",
 		"null45_lua_extensions_test_dbpf_get_cohort_property_value",
 		"null45_lua_extensions_test_dbpf_get_exemplar_property_value",
 		"null45_lua_extensions_test_dbpf_resource_exists",

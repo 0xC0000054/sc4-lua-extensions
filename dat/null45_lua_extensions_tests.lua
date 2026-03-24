@@ -4,6 +4,36 @@
 -- The following code is used to test the lua_extensions functions.
 -- It also serves as examples of their use.
 
+-- Define a uniquely named table to hold the script's global variables. 
+-- All global variables and functions used in Lua scripts must be uniquely named
+-- (typically with a prefix or suffix) to prevent collisions between scripts.
+-- Adding global variables to a uniquely named table is an easy way to achieve that
+-- while also keeping them organized.
+null45_lua_extensions_test = {}
+-- Read the ExemplarName property from 0x6534284A 0x88CD66E9 0x00000001 as a global variable.
+-- The dbpf.get_exemplar_property_value function will be called when the game compiles this script.
+null45_lua_extensions_test.variable = dbpf.get_exemplar_property_value('88cd66e9', 1, 32)
+
+function null45_lua_extensions_test_dbpf_compile_time_variable()   
+  -- Test reading a property value that was initialized when the script was compiled.
+  -- The value will be nil if the native function was not initialized before this
+  -- script was compiled or another error occurred.
+  --
+  -- SC4 does not initialize its game and sc4game table functions until after all scripts
+  -- are compiled.
+  -- As a special case, the Lua Extensions DLL initializes its native functions after
+  -- the game compiles the script that defines them.
+  -- This was done to allow Lua scripts to read exemplar and cohort property data
+  -- into variables that are initialized when the script is compiled.
+  local result = null45_lua_extensions_test.variable
+  
+  if (result == nil) then
+    result = 'Failed to read the ExemplarName property from 0x6534284A 0x88CD66E9 0x00000001'
+  end
+  
+  return result
+end
+
 function null45_lua_extensions_test_dbpf_get_cohort_property_value()  
   -- Load the Exemplar Name property from 0x05342861 0x67BDDF0C 0x00000001.
   -- The group_id, instance_id, and property_id values can be either a number

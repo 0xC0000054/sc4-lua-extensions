@@ -21,7 +21,18 @@
 
 #pragma once
 
-namespace PackageScriptLoadingPatch
+class cGZPersistResourceKey;
+class cISCLua;
+
+class IScriptCompilationCallback
 {
-	bool Install();
-}
+public:
+	/**
+	 * @brief The callback that is executed when a script was successfully compiled.
+	 * @param key The resource key that the script was loaded from.
+	 * @param pLua The Lua instance that compiled the script.
+	 */
+	virtual void ScriptCompiled(cGZPersistResourceKey const& key, cISCLua* pLua) const = 0;
+};
+
+extern IScriptCompilationCallback* spScriptCompilationCallback;

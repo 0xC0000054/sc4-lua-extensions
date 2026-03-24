@@ -31,6 +31,9 @@
     <Filter Include="Source Files\lua-extensions\sc4game">
       <UniqueIdentifier>{da23655f-0a49-4afd-9955-9ef2cc570ed5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\public">
+      <UniqueIdentifier>{af40a1a4-372a-42fc-912e-939005ddc438}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
@@ -123,6 +126,9 @@
     <ClCompile Include="lua-extensions\DBPFTableFunctions.cpp">
       <Filter>Source Files\lua-extensions</Filter>
     </ClCompile>
+    <ClCompile Include="PackageScriptCompilationCallbackServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -211,6 +217,15 @@
     </ClInclude>
     <ClInclude Include="lua-extensions\DBPFTableFunctions.h">
       <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="IScriptCompilationCallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="public\include\cIPackageScriptCompilationCallbackServer.h">
+      <Filter>Header Files\public</Filter>
+    </ClInclude>
+    <ClInclude Include="PackageScriptCompilationCallbackServer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
