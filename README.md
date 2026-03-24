@@ -39,6 +39,10 @@ The plugin may work on Windows 7 or later, but I do not have the ability to test
 The plugin should write a _SC4LuaExtensions.log_ file in the same folder as the plugin.    
 The log contains status information for the most recent run of the plugin.
 
+## For DLL Developers
+
+The DLL provide a GZCOM class to allow callback when the game loads package script, see [this page](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/docs/For_DLL_Developers.md).
+
 # License
 
 This project is licensed under the terms of the GNU Lesser General Public License version 3.0.    
