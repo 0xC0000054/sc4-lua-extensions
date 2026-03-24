@@ -41,7 +41,7 @@ The log contains status information for the most recent run of the plugin.
 
 ## For DLL Developers
 
-The DLL provide a GZCOM class to allow callback when the game loads package script, see [this page](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/docs/For_DLL_Developers.md).
+The DLL provide a GZCOM class to allow callback when the game loads package scripts, see [this page](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/docs/For_DLL_Developers.md).
 
 # License
 
