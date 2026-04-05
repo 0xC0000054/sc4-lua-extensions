@@ -33,10 +33,6 @@ namespace
 		// This error log format is based on the one Maxis used in their built-in Lua script error handler.
 		// Maxis removed the logging code from retail builds of the game, so the built-in Lua script error
 		// handler just builds an error string that is not used.
-		//
-		// Unfortunately, Lua scripts added by plugins will not include the script name in the error
-		// message, SC4 loads all plugins scripts with the script name as an empty string.
-		// But the Lua error message may include the name of the function.
 
 		logger.WriteLine(LogLevel::Error, "Lua script error !\n");
 
