@@ -40,6 +40,7 @@
 #include "DebugUtil.h"
 #include "GlobalPointers.h"
 #include "GZServPtrs.h"
+#include "LuaErrorReporting.h"
 #include "LuaPrintFunction.h"
 #include "PackageScriptCompilationCallbackServer.h"
 #include "PackageScriptLoadingPatch.h"
@@ -93,73 +94,6 @@ cRZAutoRefCount<cISC4View3DWin> spView3D;
 
 namespace
 {
-	void LuaErrorCallback(cIGZLua5Thread* pThread, int32_t errorCode, const char* message)
-	{
-		Logger& logger = Logger::GetInstance();
-
-		// This error log format is based on the one Maxis used in their built-in Lua script error handler.
-		// Maxis removed the logging code from retail builds of the game, so the built-in Lua script error
-		// handler just builds an error string that is not used.
-		//
-		// Unfortunately, Lua scripts added by plugins will not include the script name in the error
-		// message, SC4 loads all plugins scripts with the script name as an empty string.
-		// But the Lua error message may include the name of the function.
-
-		logger.WriteLine(LogLevel::Error, "Lua script error !\n");
-
-		switch (errorCode)
-		{
-		case 1:
-			logger.WriteLine(LogLevel::Error, "Run-time");
-			break;
-		case 2:
-			logger.WriteLine(LogLevel::Error, "File-related");
-			break;
-		case 3:
-			logger.WriteLine(LogLevel::Error, "Syntax");
-			break;
-		case 4:
-			logger.WriteLine(LogLevel::Error, "Allocation");
-			break;
-		case 5:
-		default:
-			logger.WriteLine(LogLevel::Error, "Unknown");
-			break;
-		}
-
-		if (pThread)
-		{
-			logger.WriteLineFormatted(LogLevel::Error, "Thread ID: %u", pThread->GetID());
-		}
-		else
-		{
-			logger.WriteLine(LogLevel::Error, "Thread ID: Unknown");
-		}
-
-		logger.WriteLineFormatted(LogLevel::Error, "Error Type: %s", message);
-		logger.WriteLine(LogLevel::Error, "\n==========================================================================================\n");
-	}
-
-	void SetLuaErrorCallback(cISC4App* pSC4App, cIGZLua5::ErrorReporterCallback callback)
-	{
-		// The city advisor/automata scripting system uses the
-		// cISCLua instance owned by cISC4App.
-		// We take advantage of that and add error logging to help
-		// mod authors that write Lua scripts.
-
-		cISCLua* pLuaInterpreter = pSC4App->GetLuaInterpreter();
-
-		if (pLuaInterpreter)
-		{
-			cIGZLua5* pGZLua5 = pLuaInterpreter->AsIGZLua5();
-
-			if (pGZLua5)
-			{
-				pGZLua5->SetErrorReporter(callback, true);
-			}
-		}
-	}
-
 	cRZAutoRefCount<cISC4View3DWin> GetView3DWin()
 	{
 		constexpr uint32_t kGZWin_WinSC4App = 0x6104489a;
@@ -378,7 +312,18 @@ public:
 			if (pApp->QueryInterface(GZIID_cISC4App, sc4App.AsPPVoid()))
 			{
 				spCCM = sc4App->GetCheatCodeManager();
-				SetLuaErrorCallback(sc4App, LuaErrorCallback);
+
+				// The city advisor/automata scripting system uses the
+				// cISCLua instance owned by cISC4App.
+				// We take advantage of that and add error logging to help
+				// mod authors that write Lua scripts.
+
+				cISCLua* pLua = sc4App->GetLuaInterpreter();
+
+				if (pLua)
+				{
+					LuaErrorReporting::InstallErrorLoggingCallback(pLua->AsIGZLua5());
+				}
 			}
 		}
 
@@ -424,7 +369,17 @@ public:
 
 				if (pApp->QueryInterface(GZIID_cISC4App, sc4App.AsPPVoid()))
 				{
-					SetLuaErrorCallback(sc4App, nullptr);
+					// The city advisor/automata scripting system uses the
+					// cISCLua instance owned by cISC4App.
+					// We take advantage of that and add error logging to help
+					// mod authors that write Lua scripts.
+
+					cISCLua* pLua = sc4App->GetLuaInterpreter();
+
+					if (pLua)
+					{
+						LuaErrorReporting::UninstallErrorLoggingCallback(pLua->AsIGZLua5());
+					}
 				}
 			}
 		}

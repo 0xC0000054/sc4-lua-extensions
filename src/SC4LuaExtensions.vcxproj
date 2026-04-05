@@ -36,6 +36,7 @@
     <ClCompile Include="lua-extensions\sc4game\SC4GameLanguageTable.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameTableBase.cpp" />
     <ClCompile Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.cpp" />
+    <ClCompile Include="LuaErrorReporting.cpp" />
     <ClCompile Include="LuaExtensionsDllDirector.cpp" />
     <ClCompile Include="LuaPrintFunction.cpp" />
     <ClCompile Include="PackageScriptCompilationCallbackServer.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="lua-extensions\sc4game\SC4GameLanguageTable.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameTableBase.h" />
     <ClInclude Include="lua-extensions\sc4game\SC4GameTableSCLuaBase.h" />
+    <ClInclude Include="LuaErrorReporting.h" />
     <ClInclude Include="LuaPrintFunction.h" />
     <ClInclude Include="PackageScriptCompilationCallbackServer.h" />
     <ClInclude Include="PackageScriptLoadingPatch.h" />
