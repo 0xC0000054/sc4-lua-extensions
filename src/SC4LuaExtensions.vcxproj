@@ -21,6 +21,7 @@
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCLuaUtil.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
+    <ClCompile Include="cGZLuaScriptServerHooks.cpp" />
     <ClCompile Include="DebugUtil.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4Simulator.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISCLua.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCLuaUtil.h" />
+    <ClInclude Include="cGZLuaScriptServerHooks.h" />
     <ClInclude Include="GlobalPointers.h" />
     <ClInclude Include="IScriptCompilationCallback.h" />
     <ClInclude Include="lua-extensions\DBPFTableFunctions.h" />

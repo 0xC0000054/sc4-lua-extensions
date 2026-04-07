@@ -22,6 +22,7 @@
 #include "version.h"
 #include "FileSystem.h"
 #include "Logger.h"
+#include "cGZLuaScriptServerHooks.h"
 #include "cIGZApp.h"
 #include "cIGZCOM.h"
 #include "cIGZFrameWork.h"
@@ -396,6 +397,7 @@ public:
 	{
 		replacedMaxisPrintFunctionPointers = LuaPrintFunction::PatchMaxisPrintFunctionPointers();
 		installedPackageScriptLoadingPatch = PackageScriptLoadingPatch::Install();
+		cGZLuaScriptServerHooks::Install();
 
 		const cIGZFrameWork::FrameworkState state = mpFrameWork->GetState();
 
