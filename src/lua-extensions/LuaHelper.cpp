@@ -169,3 +169,35 @@ void LuaHelper::SetResultFromIGZVariant(cISCLua* pLua, const cIGZVariant* pVaria
 		break;
 	}
 }
+
+bool LuaHelper::TryParseHexStringToUint32(const std::string_view& hexString, uint32_t& outValue)
+{
+	bool result = false;
+
+	const size_t textLength = hexString.size();
+
+	// The string must have an even number of characters.
+	if (textLength > 0 && (textLength % 2) == 0)
+	{
+		const char* start = hexString.data();
+		const char* end = start + textLength;
+
+		if (textLength > 2 && hexString[0] == '0')
+		{
+			const char second = hexString[1];
+
+			if (second == 'x' || second == 'X')
+			{
+				// std::from_chars can't parse hexadecimal numbers with the 0x prefix.
+				start += 2;
+			}
+		}
+
+		constexpr int base = 16;
+
+		const auto fromCharsResult = std::from_chars(start, end, outValue, base);
+		result = fromCharsResult.ec == std::errc{} && fromCharsResult.ptr == end;
+	}
+
+	return result;
+}

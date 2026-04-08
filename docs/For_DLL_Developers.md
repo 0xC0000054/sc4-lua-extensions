@@ -40,4 +40,9 @@ functions that dependent scripts may call to initialize compile-time global vari
 An example of this is the `dbpf.get_exemplar_property_value` function provided by this DLL. Some scripts that depend on this DLL 
 call it to initialize global variables to values read from specific exemplar properties.
 See [null45_lua_extensions_tests.lua](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/dat/null45_lua_extensions_tests.lua).
- 
+
+## Lua Script Server
+
+The DLL provides a message that allows other DLLs to add native functions into the game's cIGZLuaScriptServer instance
+before the game loads Lua scripts from the command line.
+See [LuaScriptServerAddNativeFunctionMessage.h](https://github.com/0xC0000054/sc4-lua-extensions/blob/main/src/public/include/LuaScriptServerAddNativeFunctionMessage.h) for details.

@@ -29,6 +29,8 @@
 
 namespace LuaHelper
 {
+	bool TryParseHexStringToUint32(const std::string_view& hexString, uint32_t& outValue);
+
 	template <typename T>
 	bool GetNumber(cISCLua* pLua, int32_t parameterIndex, T& outValue)
 	{
@@ -71,28 +73,7 @@ namespace LuaHelper
 					const char* const text = pLua->ToString(parameterIndex);
 					const uint32_t textLength = pLua->Strlen(parameterIndex);
 
-					// The string must have an even number of characters.
-					if (textLength > 0 && (textLength % 2) == 0)
-					{
-						const char* start = text;
-						const char* end = text + textLength;
-
-						if (textLength > 2 && text[0] == '0')
-						{
-							const char second = text[1];
-
-							if (second == 'x' || second == 'X')
-							{
-								// std::from_chars can't parse hexadecimal numbers with the 0x prefix.
-								start += 2;
-							}
-						}
-
-						constexpr int base = 16;
-
-						const auto fromCharsResult = std::from_chars(start, end, outValue, base);
-						result = fromCharsResult.ec == std::errc{} && fromCharsResult.ptr == end;
-					}
+					result = LuaHelper::TryParseHexStringToUint32(std::string_view(text, textLength), outValue);
 				}
 			}
 		}

@@ -16,6 +16,11 @@ included in the log, _ShowMaxisLuaDebugText_ and _HideMaxisLuaDebugText_.
 
 By default, the Maxis Lua debug text will be excluded from the log.
 
+## cIGZLuaScriptServer Extensions
+
+The DLL adds several new features to the cIGZLuaScriptServer environment the game uses to run test scripts.
+These features include _print_ and _hex2dec_ functions along with re-enabling error logging.
+
 ## Download
 
 The plugin can be downloaded from the Releases tab: https://github.com/0xC0000054/sc4-lua-extensions/releases

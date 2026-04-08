@@ -22,8 +22,12 @@
 #include "cGZLuaScriptServerHooks.h"
 #include "cIGZLua5.h"
 #include "cIGZLua5Thread.h"
+#include "cIGZMessageServer2.h"
+#include "cRZMessage2Standard.h"
+#include "GZServPtrs.h"
 #include "Logger.h"
 #include "LuaErrorReporting.h"
+#include "LuaScriptServerAddNativeFunctionMessage.h"
 #include "Patcher.h"
 #include "SC4VersionDetection.h"
 #include "SCLuaUtil.h"
@@ -103,6 +107,21 @@ namespace
 		return 0;
 	}
 
+	void SendLuaScriptServerAddNativeFunctionsMessage(cIGZLua5* pIGZLua5)
+	{
+		cIGZMessageServer2Ptr messageServer2;
+
+		if (messageServer2)
+		{
+			cRZMessage2Standard message;
+			message.SetType(kSC4MessageLuaScriptServerAddNativeFunction);
+			message.SetData1(reinterpret_cast<intptr_t>(pIGZLua5));
+			message.SetIGZUnknown(pIGZLua5);
+
+			messageServer2->MessageSend(reinterpret_cast<cIGZMessage2*>(reinterpret_cast<cIGZMessage2Standard*>(&message)));
+		}
+	}
+
 	bool __fastcall Hooked_ScriptArgSetup(cGZLuaScriptServer* thisPtr, void* edxUnused)
 	{
 		bool result = RealScriptArgSetup(thisPtr);
@@ -127,6 +146,7 @@ namespace
 			}
 
 			LuaErrorReporting::InstallErrorLoggingCallback(thisPtr->pLua5);
+			SendLuaScriptServerAddNativeFunctionsMessage(thisPtr->pLua5);
 		}
 
 		return result;
@@ -135,10 +155,6 @@ namespace
 
 bool cGZLuaScriptServerHooks::Install()
 {
-	// TODO: Possibly make the hook points extendable for other callers by providing
-	//       a cIGZLuaScriptServerHookTarget interface with Init/Shutdown methods.
-	//       This would require hooking the Shutdown method.
-
 	bool result = false;
 
 	Logger& logger = Logger::GetInstance();

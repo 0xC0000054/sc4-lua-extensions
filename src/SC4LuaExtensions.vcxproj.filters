@@ -135,6 +135,9 @@
     <ClCompile Include="cGZLuaScriptServerHooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lua-extensions\LuaScriptServerFunctions.cpp">
+      <Filter>Source Files\lua-extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h">
@@ -238,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="cGZLuaScriptServerHooks.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="public\include\LuaScriptServerAddNativeFunctionMessage.h">
+      <Filter>Header Files\public</Filter>
+    </ClInclude>
+    <ClInclude Include="lua-extensions\LuaScriptServerFunctions.h">
+      <Filter>Header Files\lua-extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

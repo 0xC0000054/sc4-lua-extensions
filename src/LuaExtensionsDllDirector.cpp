@@ -43,6 +43,7 @@
 #include "GZServPtrs.h"
 #include "LuaErrorReporting.h"
 #include "LuaPrintFunction.h"
+#include "LuaScriptServerAddNativeFunctionMessage.h"
 #include "PackageScriptCompilationCallbackServer.h"
 #include "PackageScriptLoadingPatch.h"
 #include "SC4VersionDetection.h"
@@ -53,6 +54,7 @@
 #include "SC4GameCameraTable.h"
 #include "SC4GameCityTable.h"
 #include "SC4GameLanguageTable.h"
+#include "LuaScriptServerFunctions.h"
 #include "LuaExtensionFunctionTests.h"
 
 #include <array>
@@ -174,6 +176,11 @@ public:
 		return result;
 	}
 
+	void LuaScriptServerAddNativeFunction(cIGZMessage2Standard* pStandardMsg)
+	{
+		LuaScriptServerFunctions::Register(static_cast<cIGZLua5*>(pStandardMsg->GetIGZUnknown()));
+	}
+
 	void PostCityInit(cIGZMessage2Standard* pStandardMsg)
 	{
 		spCity = static_cast<cISC4City*>(pStandardMsg->GetVoid1());
@@ -253,6 +260,9 @@ public:
 	{
 		switch (pMessage->GetType())
 		{
+		case kSC4MessageLuaScriptServerAddNativeFunction:
+			LuaScriptServerAddNativeFunction(static_cast<cIGZMessage2Standard*>(pMessage));
+			break;
 		case kSC4MessagePostCityInit:
 			PostCityInit(static_cast<cIGZMessage2Standard*>(pMessage));
 			break;
@@ -397,7 +407,17 @@ public:
 	{
 		replacedMaxisPrintFunctionPointers = LuaPrintFunction::PatchMaxisPrintFunctionPointers();
 		installedPackageScriptLoadingPatch = PackageScriptLoadingPatch::Install();
-		cGZLuaScriptServerHooks::Install();
+
+		if (cGZLuaScriptServerHooks::Install())
+		{
+			cIGZMessageServer2Ptr pMS2;
+
+			if (pMS2)
+			{
+				// This message needs to be subscribed to in PreAppInit or earlier.
+				pMS2->AddNotification(this, kSC4MessageLuaScriptServerAddNativeFunction);
+			}
+		}
 
 		const cIGZFrameWork::FrameworkState state = mpFrameWork->GetState();
 
