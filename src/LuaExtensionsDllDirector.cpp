@@ -46,6 +46,7 @@
 #include "LuaScriptServerAddNativeFunctionMessage.h"
 #include "PackageScriptCompilationCallbackServer.h"
 #include "PackageScriptLoadingPatch.h"
+#include "SC4UI.h"
 #include "SC4VersionDetection.h"
 
 #include "DBPFTableFunctions.h"
@@ -97,37 +98,6 @@ cRZAutoRefCount<cISC4View3DWin> spView3D;
 
 namespace
 {
-	cRZAutoRefCount<cISC4View3DWin> GetView3DWin()
-	{
-		constexpr uint32_t kGZWin_WinSC4App = 0x6104489a;
-		constexpr uint32_t kGZWin_SC4View3DWin = 0x9a47b417;
-		constexpr uint32_t kGZIID_cISC4View3DWin = 0xFA47B3F9;
-
-		cRZAutoRefCount<cISC4View3DWin> view3D;
-
-		cISC4AppPtr sc4App;
-
-		cIGZWin* mainWindow = sc4App->GetMainWindow();
-
-		if (mainWindow)
-		{
-			cIGZWin* pParentWin = mainWindow->GetChildWindowFromID(kGZWin_WinSC4App);
-
-			if (pParentWin)
-			{
-				if (!pParentWin->GetChildAs(
-					kGZWin_SC4View3DWin,
-					kGZIID_cISC4View3DWin,
-					view3D.AsPPVoid()))
-				{
-					view3D.Reset();
-				}
-			}
-		}
-
-		return view3D;
-	}
-
 #ifdef _DEBUG
 	void DebugLogCompiledScriptTGI(cGZPersistResourceKey const& key, void* pContext)
 	{
@@ -189,7 +159,7 @@ public:
 		{
 			spBudgetSim = spCity->GetBudgetSimulator();
 			spSimulator = spCity->GetSimulator();
-			spView3D = GetView3DWin();
+			spView3D = SC4UI::GetView3DWin();
 
 			if (!addedScriptCompilationCallback)
 			{
