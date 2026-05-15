@@ -59,6 +59,7 @@ See [LICENSE.txt](LICENSE.txt) for more information.
 [Windows Implementation Library](https://github.com/microsoft/wil) - MIT License    
 [SC4Fix](https://github.com/nsgomez/sc4fix) - MIT License.    
 [SafeInt](https://github.com/dcleblanc/SafeInt) - MIT License   
+[Frozen](https://github.com/serge-sans-paille/frozen) - Apache 2.0 License.    
 
 # Source Code
 

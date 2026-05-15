@@ -135,7 +135,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\frozen\include;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -159,7 +159,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\frozen\include;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

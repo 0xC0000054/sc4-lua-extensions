@@ -7,3 +7,6 @@
 [submodule "vendor/wil"]
 	path = vendor/wil
 	url = https://github.com/microsoft/wil.git
+[submodule "vendor/frozen"]
+	path = vendor/frozen
+	url = https://github.com/serge-sans-paille/frozen.git
