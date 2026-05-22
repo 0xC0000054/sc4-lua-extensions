@@ -10,19 +10,19 @@ dofile("adv_game_data.lua") -- for the game and sc4game tables
 dbpf = {}
 
 -- Reads the specified cohort property.
--- The group_id, instance_id, and property_id values can be either a number or a hexadecimal string.
+-- The group_id, instance_id, and property_id values must be a number, convert hexadecimal strings to a number with the hex2dec function.
 -- The returned type will depend on the property type.
 -- Nil is returned if the cohort/property does not exist.
 dbpf.get_cohort_property_value = function(group_id, instance_id, property_id) return nil end
 
 -- Reads the specified exemplar property.
--- The group_id, instance_id, and property_id values can be either a number or a hexadecimal string.
+-- The group_id, instance_id, and property_id values must be a number, convert hexadecimal strings to a number with the hex2dec function.
 -- The returned type will depend on the property type.
 -- Nil is returned if the exemplar/property does not exist.
 dbpf.get_exemplar_property_value = function(group_id, instance_id, property_id) return nil end
 
 -- Gets a value indicating if the specified TGI exists in the game.
--- The type_id, group_id, and instance_id values can be either a number or a hexadecimal string.
+-- The type_id, group_id, and instance_id values must be a number, convert hexadecimal strings to a number with the hex2dec function.
 dbpf.resource_exists = function(type_id, group_id, instance_id) return false end
 
 ---------------------------------------------------------------------------------
@@ -54,11 +54,11 @@ game.resume = function() end
 -- budget table - Maxis already defined this
 
 -- Gets the total expense for the specified budget department.
--- The department_guid can be either a number or a hexadecimal string.
+-- The department_guid must be a number, convert hexadecimal strings to a number with the hex2dec function.
 sc4game.budget.get_department_total_expense = function(department_guid) return 0 end
 
 -- Gets the total income for the specified budget department.
--- The department_guid can be either a number or a hexadecimal string.
+-- The department_guid must be a number, convert hexadecimal strings to a number with the hex2dec function.
 sc4game.budget.get_department_total_income = function(department_guid) return 0 end
 
 -- language table
@@ -124,7 +124,7 @@ sc4game.city = {}
   -- The orientation parameter is a value from the sc4game_city_place_lot_orientation table. 
   -- The building_exemplar_iid parameter is optional unless you want a specific variant
   -- for a lot that is used by multiple building families.
-  -- The lot_exemplar_iid and building_exemplar_iid can be either a number or a hexadecimal string.
+  -- The lot_exemplar_iid and building_exemplar_iid must be a number, convert hexadecimal strings to a number with the hex2dec function.
   sc4game.city.place_lot = function(city_x, city_z, orientation, lot_exemplar_iid, building_exemplar_iid) return false end
   
 -- camera table
