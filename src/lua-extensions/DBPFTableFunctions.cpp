@@ -31,6 +31,7 @@
 #include "GlobalPointers.h"
 #include "LuaFunctionRegistration.h"
 #include "LuaHelper.h"
+#include "Logger.h"
 #include "SCLuaUtil.h"
 #include "StringResourceKey.h"
 #include "StringResourceManager.h"
@@ -49,35 +50,60 @@ namespace
 		uint32_t propertyID = 0;
 
 		if (LuaHelper::FunctionHasParameterCount(lua, 3)
-			&& spResourceManager
 			&& LuaHelper::GetNumber(lua, 1, groupID)
 			&& LuaHelper::GetNumber(lua, 2, instanceID)
 			&& LuaHelper::GetNumber(lua, 3, propertyID))
 		{
-			const cGZPersistResourceKey key(kCohortTypeID, groupID, instanceID);
-
-			cRZAutoRefCount<cISCResExemplarCohort> cohort;
-
-			if (spResourceManager->GetResource(key, GZIID_cISCResExemplarCohort, cohort.AsPPVoid(), 0, nullptr))
+			if (spResourceManager)
 			{
-				const cISCProperty* pProperty = cohort->AsISCPropertyHolder()->GetProperty(propertyID);
+				const cGZPersistResourceKey key(kCohortTypeID, groupID, instanceID);
 
-				if (pProperty)
+				cRZAutoRefCount<cISCResExemplarCohort> cohort;
+
+				if (spResourceManager->GetResource(key, GZIID_cISCResExemplarCohort, cohort.AsPPVoid(), 0, nullptr))
 				{
-					LuaHelper::SetResultFromIGZVariant(lua, pProperty->GetPropertyValue());
+					const cISCProperty* pProperty = cohort->AsISCPropertyHolder()->GetProperty(propertyID);
+
+					if (pProperty)
+					{
+						LuaHelper::SetResultFromIGZVariant(lua, pProperty->GetPropertyValue());
+					}
+					else
+					{
+						Logger::GetInstance().WriteLineFormatted(
+							LogLevel::Error,
+							"dbpf.get_cohort_property_value: Failed to read property 0x%08X in cohort 0x%08X, 0x%08X, 0x%08X",
+							propertyID,
+							kCohortTypeID,
+							groupID,
+							instanceID);
+						lua->PushNil();
+					}
 				}
 				else
 				{
+					Logger::GetInstance().WriteLineFormatted(
+						LogLevel::Error,
+						"dbpf.get_cohort_property_value: Failed to open cohort 0x%08X, 0x%08X, 0x%08X",
+						kCohortTypeID,
+						groupID,
+						instanceID);
 					lua->PushNil();
 				}
 			}
 			else
 			{
+				Logger::GetInstance().WriteLine(
+					LogLevel::Error,
+					"dbpf.get_cohort_property_value: Internal error, resource manager pointer was null.");
 				lua->PushNil();
 			}
 		}
 		else
 		{
+			Logger::GetInstance().WriteLine(
+				LogLevel::Error,
+				"dbpf.get_cohort_property_value: Invalid parameters.");
 			lua->PushNil();
 		}
 
@@ -95,35 +121,60 @@ namespace
 		uint32_t propertyID = 0;
 
 		if (LuaHelper::FunctionHasParameterCount(lua, 3)
-			&& spResourceManager
 			&& LuaHelper::GetNumber(lua, 1, groupID)
 			&& LuaHelper::GetNumber(lua, 2, instanceID)
 			&& LuaHelper::GetNumber(lua, 3, propertyID))
 		{
-			const cGZPersistResourceKey key(kExemplarTypeID, groupID, instanceID);
-
-			cRZAutoRefCount<cISCResExemplar> exemplar;
-
-			if (spResourceManager->GetResource(key, GZIID_cISCResExemplar, exemplar.AsPPVoid(), 0, nullptr))
+			if (spResourceManager)
 			{
-				const cISCProperty* pProperty = exemplar->AsISCPropertyHolder()->GetProperty(propertyID);
+				const cGZPersistResourceKey key(kExemplarTypeID, groupID, instanceID);
 
-				if (pProperty)
+				cRZAutoRefCount<cISCResExemplar> exemplar;
+
+				if (spResourceManager->GetResource(key, GZIID_cISCResExemplar, exemplar.AsPPVoid(), 0, nullptr))
 				{
-					LuaHelper::SetResultFromIGZVariant(lua, pProperty->GetPropertyValue());
+					const cISCProperty* pProperty = exemplar->AsISCPropertyHolder()->GetProperty(propertyID);
+
+					if (pProperty)
+					{
+						LuaHelper::SetResultFromIGZVariant(lua, pProperty->GetPropertyValue());
+					}
+					else
+					{
+						Logger::GetInstance().WriteLineFormatted(
+							LogLevel::Error,
+							"dbpf.get_exemplar_property_value: Failed to read property 0x%08X in exemplar 0x%08X, 0x%08X, 0x%08X",
+							propertyID,
+							kExemplarTypeID,
+							groupID,
+							instanceID);
+						lua->PushNil();
+					}
 				}
 				else
 				{
+					Logger::GetInstance().WriteLineFormatted(
+						LogLevel::Error,
+						"dbpf.get_exemplar_property_value: Failed to open exemplar 0x%08X, 0x%08X, 0x%08X",
+						kExemplarTypeID,
+						groupID,
+						instanceID);
 					lua->PushNil();
 				}
 			}
 			else
 			{
+				Logger::GetInstance().WriteLine(
+					LogLevel::Error,
+					"dbpf.get_exemplar_property_value: Internal error, resource manager pointer was null.");
 				lua->PushNil();
 			}
 		}
 		else
 		{
+			Logger::GetInstance().WriteLine(
+				LogLevel::Error,
+				"dbpf.get_exemplar_property_value: Invalid parameters.");
 			lua->PushNil();
 		}
 
@@ -132,22 +183,35 @@ namespace
 
 	int32_t resource_exists(lua_State* pState)
 	{
-		bool result = false;
-
 		cRZAutoRefCount<cISCLua> lua = SCLuaUtil::GetISCLuaFromFunctionState(pState);
 
 		cGZPersistResourceKey key;
 
 		if (LuaHelper::FunctionHasParameterCount(lua, 3)
-			&& spResourceManager
 			&& LuaHelper::GetNumber(lua, 1, key.type)
 			&& LuaHelper::GetNumber(lua, 2, key.group)
 			&& LuaHelper::GetNumber(lua, 3, key.instance))
 		{
-			result = spResourceManager->TestForKey(key);
+			if (spResourceManager)
+			{
+				lua->PushBoolean(spResourceManager->TestForKey(key));
+			}
+			else
+			{
+				Logger::GetInstance().WriteLine(
+					LogLevel::Error,
+					"dbpf.resource_exists: Internal error, resource manager pointer was null.");
+				lua->PushNil();
+			}
+		}
+		else
+		{
+			Logger::GetInstance().WriteLine(
+				LogLevel::Error,
+				"dbpf.resource_exists: Invalid parameters.");
+			lua->PushNil();
 		}
 
-		lua->PushBoolean(result);
 		return 1;
 	}
 }
