@@ -20,7 +20,6 @@
  */
 
 #include "version.h"
-#include "FileSystem.h"
 #include "Logger.h"
 #include "cGZLuaScriptServerHooks.h"
 #include "cIGZApp.h"
@@ -114,10 +113,7 @@ public:
 		  installedPackageScriptLoadingPatch(false),
 		  addedScriptCompilationCallback(false)
 	{
-		std::filesystem::path logFilePath = FileSystem::GetPluginLogFilePath();
-
 		Logger& logger = Logger::GetInstance();
-		logger.Init(logFilePath, LogLevel::Error);
 		logger.WriteLogFileHeader("SC4LuaExtensions v" PLUGIN_VERSION_STR);
 	}
 
@@ -128,7 +124,7 @@ public:
 
 	void EnumClassObjects(ClassObjectEnumerationCallback pCallback, void* pContext)
 	{
-		if (SC4VersionDetection::IsVersion641())
+		if (SC4VersionDetection::GetGameVersion() == 641)
 		{
 			pCallback(GZCLSID_PackageScriptCompilationCallbackServer, 0, pContext);
 		}

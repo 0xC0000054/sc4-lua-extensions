@@ -213,7 +213,7 @@ bool SC4GameCityTable::sPlaceLot(
 {
 	bool result = false;
 
-	if (SC4VersionDetection::IsVersion641() && spCity)
+	if (SC4VersionDetection::GetGameVersion() == 641 && spCity)
 	{
 		int32_t cellX = 0;
 		int32_t cellZ = 0;

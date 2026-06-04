@@ -9,6 +9,12 @@ License notice for gzcom-dll
 GNU Lesser General Public License, version 2.1 or later.
 https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
+License notice for sc4-dll-utilities
+--------------------------------------------------------------
+
+GNU Lesser General Public License, version 2.1 or later.
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
 License notice for Windows Implementation Library
 --------------------------------------------------------------
 

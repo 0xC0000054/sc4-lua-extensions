@@ -51,7 +51,7 @@ namespace
 					{
 						const char* result = pIGZLua5Thread->ToString(-1);
 
-						DebugUtil::PrintLineToDebugOutputFormattedUTF8(
+						DebugUtil::PrintLineToDebugOutputFormattedUtf8(
 							"%s() returned: %s",
 							functionName,
 							result ? result : "<null>");

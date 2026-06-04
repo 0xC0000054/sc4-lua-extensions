@@ -173,11 +173,11 @@ bool LuaPrintFunction::PatchMaxisPrintFunctionPointers()
 
 		try
 		{
-			if (Patch_cLUAExtensionsCollector_print()
-				&& Patcher::OverwriteMemoryUintptr(
-					SC4AutomataScriptSystem_InitScripts_Inject,
-					reinterpret_cast<uintptr_t>(&print)))
+			if (Patch_cLUAExtensionsCollector_print())
 			{
+				Patcher::OverwriteMemory(
+					SC4AutomataScriptSystem_InitScripts_Inject,
+					reinterpret_cast<uintptr_t>(&print));
 				logger.WriteLine(LogLevel::Info, "Replaced the Maxis Lua print function overrides.");
 				result = true;
 			}

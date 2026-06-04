@@ -34,11 +34,14 @@
     <Filter Include="Header Files\public">
       <UniqueIdentifier>{af40a1a4-372a-42fc-912e-939005ddc438}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\sc4-dll-utilities">
+      <UniqueIdentifier>{cc149610-c013-4a1d-9317-88104e20a38f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\sc4-dll-utilities">
+      <UniqueIdentifier>{a5f70132-50f6-42a7-b3f9-d8117e9d15c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp">
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
@@ -65,12 +68,6 @@
     </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp">
       <Filter>Source Files\GZCOM</Filter>
-    </ClCompile>
-    <ClCompile Include="FileSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugUtil.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCLuaUtil.cpp">
       <Filter>Source Files\GZCOM</Filter>
@@ -102,16 +99,10 @@
     <ClCompile Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.cpp">
       <Filter>Source Files\lua-extensions\sc4game</Filter>
     </ClCompile>
-    <ClCompile Include="SC4VersionDetection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lua-extensions\sc4game\SC4GameCameraTable.cpp">
       <Filter>Source Files\lua-extensions\sc4game</Filter>
     </ClCompile>
     <ClCompile Include="PackageScriptLoadingPatch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Patcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LuaPrintFunction.cpp">
@@ -138,11 +129,26 @@
     <ClCompile Include="lua-extensions\LuaScriptServerFunctions.cpp">
       <Filter>Source Files\lua-extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\DebugUtil.cpp">
+      <Filter>Source Files\sc4-dll-utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\Logger.cpp">
+      <Filter>Source Files\sc4-dll-utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\Patcher.cpp">
+      <Filter>Source Files\sc4-dll-utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\SC4VersionDetection.cpp">
+      <Filter>Source Files\sc4-dll-utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\StringConversion.cpp">
+      <Filter>Source Files\sc4-dll-utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\Utf8TextOFStream.cpp">
+      <Filter>Source Files\sc4-dll-utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -157,12 +163,6 @@
     </ClInclude>
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4App.h">
       <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="FileSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugUtil.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lua-extensions\LuaExtensionFunctionTests.h">
       <Filter>Header Files\lua-extensions</Filter>
@@ -203,16 +203,10 @@
     <ClInclude Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.h">
       <Filter>Header Files\lua-extensions\sc4game</Filter>
     </ClInclude>
-    <ClInclude Include="SC4VersionDetection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua-extensions\sc4game\SC4GameCameraTable.h">
       <Filter>Header Files\lua-extensions\sc4game</Filter>
     </ClInclude>
     <ClInclude Include="PackageScriptLoadingPatch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Patcher.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LuaPrintFunction.h">
@@ -247,6 +241,18 @@
     </ClInclude>
     <ClInclude Include="lua-extensions\LuaScriptServerFunctions.h">
       <Filter>Header Files\lua-extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\DebugUtil.h">
+      <Filter>Header Files\sc4-dll-utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\Logger.h">
+      <Filter>Header Files\sc4-dll-utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\Patcher.h">
+      <Filter>Header Files\sc4-dll-utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\SC4VersionDetection.h">
+      <Filter>Header Files\sc4-dll-utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

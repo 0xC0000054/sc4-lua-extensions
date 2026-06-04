@@ -21,10 +21,13 @@
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCLuaUtil.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\DebugUtil.cpp" />
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\Logger.cpp" />
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\Patcher.cpp" />
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\SC4VersionDetection.cpp" />
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\StringConversion.cpp" />
+    <ClCompile Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\src\Utf8TextOFStream.cpp" />
     <ClCompile Include="cGZLuaScriptServerHooks.cpp" />
-    <ClCompile Include="DebugUtil.cpp" />
-    <ClCompile Include="FileSystem.cpp" />
-    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="lua-extensions\DBPFTableFunctions.cpp" />
     <ClCompile Include="lua-extensions\GameTableExtensions.cpp" />
     <ClCompile Include="lua-extensions\LuaFunctionRegistration.cpp" />
@@ -43,8 +46,6 @@
     <ClCompile Include="LuaPrintFunction.cpp" />
     <ClCompile Include="PackageScriptCompilationCallbackServer.cpp" />
     <ClCompile Include="PackageScriptLoadingPatch.cpp" />
-    <ClCompile Include="Patcher.cpp" />
-    <ClCompile Include="SC4VersionDetection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZCheatCodeManager.h" />
@@ -55,6 +56,10 @@
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4Simulator.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISCLua.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCLuaUtil.h" />
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\DebugUtil.h" />
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\Logger.h" />
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\Patcher.h" />
+    <ClInclude Include="..\vendor\sc4-dll-utilities\sc4-dll-utilities\include\SC4VersionDetection.h" />
     <ClInclude Include="cGZLuaScriptServerHooks.h" />
     <ClInclude Include="GlobalPointers.h" />
     <ClInclude Include="IScriptCompilationCallback.h" />
@@ -62,9 +67,6 @@
     <ClInclude Include="lua-extensions\GameTableExtensions.h" />
     <ClInclude Include="lua-extensions\LuaFunctionRegistration.h" />
     <ClInclude Include="lua-extensions\LuaExtensionFunctionTests.h" />
-    <ClInclude Include="DebugUtil.h" />
-    <ClInclude Include="FileSystem.h" />
-    <ClInclude Include="Logger.h" />
     <ClInclude Include="lua-extensions\LuaHelper.h" />
     <ClInclude Include="lua-extensions\LuaScriptServerFunctions.h" />
     <ClInclude Include="lua-extensions\sc4game\LuaIGZCommandParameterSetHelper.h" />
@@ -78,10 +80,8 @@
     <ClInclude Include="LuaPrintFunction.h" />
     <ClInclude Include="PackageScriptCompilationCallbackServer.h" />
     <ClInclude Include="PackageScriptLoadingPatch.h" />
-    <ClInclude Include="Patcher.h" />
     <ClInclude Include="public\include\cIPackageScriptCompilationCallbackServer.h" />
     <ClInclude Include="public\include\LuaScriptServerAddNativeFunctionMessage.h" />
-    <ClInclude Include="SC4VersionDetection.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +135,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\frozen\include;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\sc4-dll-utilities\sc4-dll-utilities\include;..\vendor\SafeInt;..\vendor\frozen\include;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -159,7 +159,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\SafeInt;..\vendor\frozen\include;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\sc4-dll-utilities\sc4-dll-utilities\include;..\vendor\SafeInt;..\vendor\frozen\include;..\vendor\wil\include;.\;.\lua-extensions;.\lua-extensions\sc4game;.\public\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>

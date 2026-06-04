@@ -169,7 +169,7 @@ bool cGZLuaScriptServerHooks::Install()
 		{
 			Patcher::InstallCallHook(
 				GZLuaScriptServer_Init_Inject,
-				reinterpret_cast<uintptr_t>(&Hooked_ScriptArgSetup));
+				&Hooked_ScriptArgSetup);
 			logger.WriteLine(LogLevel::Info, "Installed the cGZLuaScriptServer hooks.");
 			result = true;
 		}

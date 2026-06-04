@@ -78,7 +78,7 @@ bool PackageScriptLoadingPatch::Install()
 
 		try
 		{
-			Patcher::InstallCallHook(SCLuaHelp_LoadPackageScripts_Inject, reinterpret_cast<uintptr_t>(&Hooked_SCLuaHelp_LoadResourceScript));
+			Patcher::InstallCallHook(SCLuaHelp_LoadPackageScripts_Inject, &Hooked_SCLuaHelp_LoadResourceScript);
 			logger.WriteLine(LogLevel::Info, "Installed the Lua package script name patch.");
 			result = true;
 		}
