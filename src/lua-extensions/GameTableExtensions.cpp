@@ -91,7 +91,7 @@ namespace
 	{
 		// Some commands are blocked from the advisor scripts due to them
 		// having behavior that could be abused by malicious scripts.
-		static constexpr frozen::unordered_set<uint32_t, 28> BlockedCommandIDs =
+		static constexpr frozen::unordered_set<uint32_t, 30> BlockedCommandIDs =
 		{
 			// App commands
 			0x0bc24f90, // CreateException - crashes the game
@@ -100,6 +100,8 @@ namespace
 			0xabac067c, // ExecuteScript - allows running arbitrary Lua test scripts
 			0xcbb17c11, // GameDelay
 			0xcbb17c12, // GamePause
+			0x4bb17c4d, // ReadRegistry - reads from the Windows Registry
+			0x2bb17c4e, // WriteRegistry - writes to the Windows Registry
 			0xabb17c74, // SendMessage - broadcasts on the internal messaging system
 			0x6bb9bbe3, // SetScriptAutoYield - only valid for test scripts
 			0xcbac32f4, // WaitForMessage2 - only valid for test scripts
